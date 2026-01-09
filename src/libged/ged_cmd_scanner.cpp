@@ -126,6 +126,9 @@ int main(int argc, const char *argv[])
     // ========= Static registration extraction ==========
     std::set<std::string> static_cmd_symbols;
     std::regex reg_cmd_macro(R"(REGISTER_GED_COMMAND\s*\(\s*([A-Za-z0-9_]+)\s*\))");
+    /* Phase 3: detect generalized registration macro with string command names */
+    std::set<std::string> cmd_names;
+    std::regex reg_bu_cmd_macro(R"(REGISTER_BU_PLUGIN_COMMAND\s*\(\s*\"([^\"]+)\"\s*,)");
 
     for (const auto &fname : input_files) {
 	std::ifstream fs(fname);
@@ -139,12 +142,20 @@ int main(int argc, const char *argv[])
 	    if (std::regex_search(sline, mm, reg_cmd_macro)) {
 		static_cmd_symbols.insert(mm[1]);
 	    }
+	    /* Phase 3: capture command names from REGISTER_BU_PLUGIN_COMMAND */
+	    std::smatch bm;
+	    if (std::regex_search(sline, bm, reg_bu_cmd_macro)) {
+		std::string cname = bm[1];
+		if (!cname.empty() && cname.find('?') == std::string::npos)
+		    cmd_names.insert(cname);
+	    }
 	}
 	fs.close();
     }
 
     // ========= Wrapper API command name extraction =========
-    std::set<std::string> cmd_names;
+    // NOTE: cmd_names may already contain entries found via REGISTER_BU_PLUGIN_COMMAND.
+    // We now supplement it with names found via ged_cmd_impl initializers.
 
     // Multi-line struct initializer support (`ged_cmd_impl` detection)
     std::regex reg_impl_begin(R"(struct\s+ged_cmd_impl\s+([A-Za-z0-9_]+)\s*=\s*\{)");
@@ -215,7 +226,7 @@ int main(int argc, const char *argv[])
     }
 
     // Supplement from macro+impl lookup for edge cases
-    // Map macro_arg_cmd -> macro_arg_cmd_impl, then extract first string from impl (if exists).
+    // Map ged_cmd_impl struct names to their command name strings, for robust lookup
     ImplNameToCmdMap impl_to_cmd;
     for (const auto &fname : input_files) {
 	std::ifstream fs(fname);

@@ -107,24 +107,24 @@ ged_sphgroup_core(struct ged *gedp, int argc, const char *argv[])
 }
 
 
-#ifdef GED_PLUGIN
+
 #include "../include/plugin.h"
-struct ged_cmd_impl sphgroup_cmd_impl = {
-    "sphgroup",
-    ged_sphgroup_core,
-    GED_CMD_DEFAULT
+
+#ifdef GED_PLUGIN
+static bu_plugin_cmd pcommands[] = {
+    { "sphgroup",            ged_sphgroup_core }
 };
-
-const struct ged_cmd sphgroup_cmd = { &sphgroup_cmd_impl };
-const struct ged_cmd *sphgroup_cmds[] = { &sphgroup_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  sphgroup_cmds, 1 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+static bu_plugin_manifest pinfo = {
+    "libged_sphgroup",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
+
 
 /*
  * Local Variables:

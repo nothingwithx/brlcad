@@ -59,23 +59,22 @@ ged_group_core(struct ged *gedp, int argc, const char *argv[])
     return _ged_combadd2(gedp, (char *)argv[1], argc-2, argv+2, 0, WMOP_UNION, 0, 0, NULL, 1);
 }
 
+#include "../include/plugin.h"
 
 #ifdef GED_PLUGIN
-#include "../include/plugin.h"
-struct ged_cmd_impl group_cmd_impl = {"group", ged_group_core, GED_CMD_DEFAULT};
-const struct ged_cmd group_cmd = { &group_cmd_impl };
-
-struct ged_cmd_impl g_cmd_impl = {"g", ged_group_core, GED_CMD_DEFAULT};
-const struct ged_cmd g_cmd = { &g_cmd_impl };
-
-const struct ged_cmd *group_cmds[] = { &group_cmd, &g_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  group_cmds, 2 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+static bu_plugin_cmd pcommands[] = {
+    { "g",            ged_group_core },
+    { "group",        ged_group_core }
+};
+static bu_plugin_manifest pinfo = {
+    "libged_group",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
 
 /*

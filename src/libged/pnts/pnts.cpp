@@ -1561,26 +1561,25 @@ ged_make_pnts_core(struct ged *gedp, int argc, const char *argv[])
     return ged_exec_pnts(gedp, 10, (const char **)nargv);
 }
 
+#include "../include/plugin.h"
 
 #ifdef GED_PLUGIN
-#include "../include/plugin.h"
 extern "C" {
-struct ged_cmd_impl pnts_cmd_impl = { "pnts", ged_pnts_core, GED_CMD_DEFAULT };
-const struct ged_cmd pnts_cmd = { &pnts_cmd_impl };
-
-struct ged_cmd_impl make_pnts_cmd_impl = { "make_pnts", ged_make_pnts_core, GED_CMD_DEFAULT };
-const struct ged_cmd make_pnts_cmd = { &make_pnts_cmd_impl };
-
-const struct ged_cmd *pnts_cmds[] = { &make_pnts_cmd,  &pnts_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  pnts_cmds, 2 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
+    static bu_plugin_cmd pcommands[] = {
+	{ "make_pnts",       ged_make_pnts_core },
+	{ "pnts",            ged_pnts_core }
+    };
+    static bu_plugin_manifest pinfo = {
+	"libged_pnts",
+	1,
+	(unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+	pcommands,
+	BU_PLUGIN_ABI_VERSION,
+	sizeof(bu_plugin_manifest)
+    };
+    BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 }
-}
-#endif
+#endif /* GED_PLUGIN */
 
 // Local Variables:
 // tab-width: 8

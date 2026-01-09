@@ -267,31 +267,30 @@ ged_help_core(struct ged *gedp, int argc, const char *argv[])
     return 0;
 }
 
-#ifdef GED_PLUGIN
+
 #include "../include/plugin.h"
+
+#ifdef GED_PLUGIN
 extern "C" {
-struct ged_cmd_impl help_cmd_impl     = { "help",    ged_help_core, GED_CMD_DEFAULT };
-const struct ged_cmd help_cmd = { &help_cmd_impl };
-
-struct ged_cmd_impl apropos_cmd_impl  = { "apropos", ged_help_core, GED_CMD_DEFAULT };
-const struct ged_cmd apropos_cmd = { &apropos_cmd_impl };
-
-struct ged_cmd_impl info_cmd_impl     = { "info",    ged_help_core, GED_CMD_DEFAULT };
-const struct ged_cmd info_cmd = { &info_cmd_impl };
-
-struct ged_cmd_impl question_cmd_impl = { "?",       ged_help_core, GED_CMD_DEFAULT };
-const struct ged_cmd question_cmd = { &question_cmd_impl };
-
-const struct ged_cmd *help_cmds[] = { &help_cmd,  &apropos_cmd,  &info_cmd,  &question_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  help_cmds, 4 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
+    static bu_plugin_cmd pcommands[] = {
+	{ "help",            ged_help_core },
+	{ "apropos",         ged_help_core },
+	{ "info",            ged_help_core },
+	{ "?",               ged_help_core }
+    };
+    static bu_plugin_manifest pinfo = {
+	"libged_help",
+	1,
+	(unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+	pcommands,
+	BU_PLUGIN_ABI_VERSION,
+	sizeof(bu_plugin_manifest)
+    };
+    BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 }
-}
-#endif
+#endif /* GED_PLUGIN */
+
+
 
 #ifdef STANDALONE
 int main(int ac, char *av[])

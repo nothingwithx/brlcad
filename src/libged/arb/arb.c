@@ -128,24 +128,25 @@ ged_arb_core(struct ged *gedp, int argc, const char *argv[])
     return BRLCAD_OK;
 }
 
+#include "../include/plugin.h"
 
 #ifdef GED_PLUGIN
-#include "../include/plugin.h"
-struct ged_cmd_impl arb_cmd_impl = {"arb", ged_arb_core, GED_CMD_DEFAULT};
-const struct ged_cmd arb_cmd = { &arb_cmd_impl };
 
 extern int ged_rotate_arb_face_core(struct ged *gedp, int argc, const char *argv[]);
-struct ged_cmd_impl rotate_arb_face_cmd_impl = {"rotate_arb_face", ged_rotate_arb_face_core, GED_CMD_DEFAULT};
-const struct ged_cmd rotate_arb_face_cmd = { &rotate_arb_face_cmd_impl };
 
-const struct ged_cmd *arb_cmds[] = { &arb_cmd, &rotate_arb_face_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  arb_cmds, 2 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+static bu_plugin_cmd pcommands[] = {
+    { "arb",              ged_arb_core },
+    { "rotate_arb_face",  ged_rotate_arb_face_core }
+};
+static bu_plugin_manifest pinfo = {
+    "libged_arb",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
 
 /*

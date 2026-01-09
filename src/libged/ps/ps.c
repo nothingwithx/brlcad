@@ -455,23 +455,24 @@ bad:
 }
 
 
-#ifdef GED_PLUGIN
 #include "../include/plugin.h"
-struct ged_cmd_impl ps_cmd_impl = {"ps", ged_ps_core, GED_CMD_DEFAULT};
-const struct ged_cmd ps_cmd = { &ps_cmd_impl };
 
-struct ged_cmd_impl postscript_cmd_impl = {"postscript", ged_ps_core, GED_CMD_DEFAULT};
-const struct ged_cmd postscript_cmd = { &postscript_cmd_impl };
-
-const struct ged_cmd *ps_cmds[] = { &ps_cmd, &postscript_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  ps_cmds, 2 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+#ifdef GED_PLUGIN
+static bu_plugin_cmd pcommands[] = {
+    { "postscript",    ged_ps_core },
+    { "ps",            ged_ps_core }
+};
+static bu_plugin_manifest pinfo = {
+    "libged_ps",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
+
 
 /*
  * Local Variables:

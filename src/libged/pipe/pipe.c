@@ -441,50 +441,29 @@ ged_pipe_prepend_pnt_core(struct ged *gedp, int argc, const char *argv[])
     return _ged_pipe_append_pnt_common(gedp, argc, argv, rt_pipe_ins_pnt);
 }
 
-#ifdef GED_PLUGIN
+
 #include "../include/plugin.h"
-struct ged_cmd_impl find_pipe_pnt_cmd_impl = {"find_pipe_pnt", ged_find_pipe_pnt_nearest_pnt_core, GED_CMD_DEFAULT};
-const struct ged_cmd find_pipe_pnt_cmd = { &find_pipe_pnt_cmd_impl };
 
-struct ged_cmd_impl pipe_move_pnt_cmd_impl = {"pipe_move_pnt", ged_pipe_move_pnt_core, GED_CMD_DEFAULT};
-const struct ged_cmd pipe_move_pnt_cmd = { &pipe_move_pnt_cmd_impl };
-
-struct ged_cmd_impl pipe_append_pnt_cmd_impl = {"pipe_append_pnt", ged_pipe_append_pnt_core, GED_CMD_DEFAULT};
-const struct ged_cmd pipe_append_pnt_cmd = { &pipe_append_pnt_cmd_impl };
-
-struct ged_cmd_impl pipe_prepend_pnt_cmd_impl = {"pipe_prepend_pnt", ged_pipe_prepend_pnt_core, GED_CMD_DEFAULT};
-const struct ged_cmd pipe_prepend_pnt_cmd = { &pipe_prepend_pnt_cmd_impl };
-
-struct ged_cmd_impl pipe_delete_pnt_cmd_impl = {"pipe_delete_pnt", ged_pipe_delete_pnt_core, GED_CMD_DEFAULT};
-const struct ged_cmd pipe_delete_pnt_cmd = { &pipe_delete_pnt_cmd_impl };
-
-struct ged_cmd_impl mouse_pipe_move_pnt_cmd_impl = {"mouse_move_pipe_pnt", ged_pipe_move_pnt_core, GED_CMD_DEFAULT};
-const struct ged_cmd mouse_pipe_move_pnt_cmd = { &mouse_pipe_move_pnt_cmd_impl };
-
-struct ged_cmd_impl mouse_pipe_append_pnt_cmd_impl = {"mouse_append_pipe_pnt", ged_pipe_append_pnt_core, GED_CMD_DEFAULT};
-const struct ged_cmd mouse_pipe_append_pnt_cmd = { &mouse_pipe_append_pnt_cmd_impl };
-
-struct ged_cmd_impl mouse_pipe_prepend_pnt_cmd_impl = {"mouse_prepend_pipe_pnt", ged_pipe_prepend_pnt_core, GED_CMD_DEFAULT};
-const struct ged_cmd mouse_pipe_prepend_pnt_cmd = { &mouse_pipe_prepend_pnt_cmd_impl };
-
-
-const struct ged_cmd *pipe_cmds[] = {
-    &find_pipe_pnt_cmd,
-    &pipe_move_pnt_cmd,
-    &pipe_append_pnt_cmd,
-    &pipe_prepend_pnt_cmd,
-    &pipe_delete_pnt_cmd,
-    &mouse_pipe_move_pnt_cmd,
-    &mouse_pipe_append_pnt_cmd,
-    &mouse_pipe_prepend_pnt_cmd,
-    NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  pipe_cmds, 8 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+#ifdef GED_PLUGIN
+static bu_plugin_cmd pcommands[] = {
+    { "find_pipe_pnt",              ged_find_pipe_pnt_nearest_pnt_core },
+    { "pipe_move_pnt",              ged_pipe_move_pnt_core },
+    { "pipe_append_pnt",            ged_pipe_append_pnt_core },
+    { "pipe_prepend_pnt",           ged_pipe_prepend_pnt_core },
+    { "pipe_delete_pnt",            ged_pipe_delete_pnt_core },
+    { "mouse_move_pipe_pnt",        ged_pipe_move_pnt_core },
+    { "mouse_append_pipe_pnt",      ged_pipe_append_pnt_core },
+    { "mouse_prepend_pipe_pnt",     ged_pipe_prepend_pnt_core }
+};
+static bu_plugin_manifest pinfo = {
+    "libged_pipe",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
 
 

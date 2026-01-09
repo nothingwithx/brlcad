@@ -1380,34 +1380,35 @@ REGISTER_GED_COMMAND(get_bot_edges_cmd);
 
 #ifdef GED_PLUGIN
 extern "C" {
-    const struct ged_cmd *bot_cmds[] = {
-	&bot_cmd,
-	&bot_condense_cmd,
-	&bot_decimate_cmd,
-	&bot_dump_cmd,
-	&bot_exterior_cmd,
-	&bot_face_fuse_cmd,
-	&bot_face_sort_cmd,
-	&bot_flip_cmd,
-	&bot_fuse_cmd,
-	&bot_merge_cmd,
-	&bot_smooth_cmd,
-	&bot_split_cmd,
-	&bot_sync_cmd,
-	&bot_vertex_fuse_cmd,
-	&dbot_dump_cmd,
-	&find_bot_edge_cmd,
-	&find_bot_pnt_cmd,
-	&get_bot_edges_cmd,
-	NULL
+    static bu_plugin_cmd pcommands[] = {
+	{ "bot",            ged_bot_core },
+	{ "bot_condense",   ged_bot_condense_core },
+	{ "bot_decimate",   ged_bot_decimate_core },
+	{ "bot_dump",       ged_bot_dump_core },
+	{ "bot_exterior",   ged_bot_exterior },
+	{ "bot_face_fuse",  ged_bot_face_fuse_core },
+	{ "bot_face_sort",  ged_bot_face_sort_core },
+	{ "bot_flip",       ged_bot_flip_core },
+	{ "bot_fuse",       ged_bot_fuse_core },
+	{ "bot_merge",      ged_bot_merge_core },
+	{ "bot_smooth",     ged_bot_smooth_core },
+	{ "bot_split",      ged_bot_split_core },
+	{ "bot_sync",       ged_bot_sync_core },
+	{ "bot_vertex_fuse",ged_bot_vertex_fuse_core },
+	{ "dbot_dump",      ged_dbot_dump_core },
+	{ "find_bot_edge",  ged_find_bot_edge_nearest_pnt_core },
+	{ "find_bot_pnt",   ged_find_bot_pnt_nearest_pnt_core },
+	{ "get_bot_edges",  ged_get_bot_edges_core }
     };
-
-    static const struct ged_plugin pinfo = { GED_API, bot_cmds, sizeof(bot_cmds)/sizeof(bot_cmds[0]) };
-
-    COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-    {
-	return &pinfo;
-    }
+    static bu_plugin_manifest pinfo = {
+	"libged_bot",
+	1,
+	(unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+	pcommands,
+	BU_PLUGIN_ABI_VERSION,
+	sizeof(bu_plugin_manifest)
+    };
+    BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 }
 #endif
 

@@ -294,29 +294,26 @@ ged_which_core(struct ged *gedp, int argc, const char *argv[])
 }
 
 
-#ifdef GED_PLUGIN
 #include "../include/plugin.h"
+
+#ifdef GED_PLUGIN
 extern "C" {
-struct ged_cmd_impl which_cmd_impl = { "which", ged_which_core, GED_CMD_DEFAULT };
-const struct ged_cmd which_cmd = { &which_cmd_impl };
-
-struct ged_cmd_impl whichair_cmd_impl = { "whichair", ged_which_core, GED_CMD_DEFAULT };
-const struct ged_cmd whichair_cmd = { &whichair_cmd_impl };
-
-struct ged_cmd_impl whichid_cmd_impl = { "whichid", ged_which_core, GED_CMD_DEFAULT };
-const struct ged_cmd whichid_cmd = { &whichid_cmd_impl };
-
-
-const struct ged_cmd *which_cmds[] = { &which_cmd,  &whichair_cmd, &whichid_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  which_cmds, 3 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
+    static bu_plugin_cmd pcommands[] = {
+	{ "which",           ged_which_core },
+	{ "whichair",        ged_which_core },
+	{ "whichid",         ged_which_core }
+    };
+    static bu_plugin_manifest pinfo = {
+	"libged_which",
+	1,
+	(unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+	pcommands,
+	BU_PLUGIN_ABI_VERSION,
+	sizeof(bu_plugin_manifest)
+    };
+    BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 }
-}
-#endif
+#endif /* GED_PLUGIN */
 
 // Local Variables:
 // tab-width: 8

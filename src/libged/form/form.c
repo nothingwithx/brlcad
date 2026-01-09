@@ -67,24 +67,21 @@ ged_form_core(struct ged *gedp, int argc, const char *argv[])
     return ftp->ft_form(gedp->ged_result_str, ftp);
 }
 
+#include "../include/plugin.h"
 
 #ifdef GED_PLUGIN
-#include "../include/plugin.h"
-struct ged_cmd_impl form_cmd_impl = {
-    "form",
-    ged_form_core,
-    GED_CMD_DEFAULT
+static bu_plugin_cmd pcommands[] = {
+    { "form",            ged_form_core }
 };
-
-const struct ged_cmd form_cmd = { &form_cmd_impl };
-const struct ged_cmd *form_cmds[] = { &form_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  form_cmds, 1 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+static bu_plugin_manifest pinfo = {
+    "libged_form",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
 
 /*

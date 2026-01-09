@@ -33,7 +33,7 @@
 
 
 int
-ged_view2model_core_vec(struct ged *gedp, int argc, const char *argv[])
+ged_view2model_vec_core(struct ged *gedp, int argc, const char *argv[])
 {
     point_t model_vec;
     point_t view_vec;
@@ -70,24 +70,24 @@ bad:
 }
 
 
-#ifdef GED_PLUGIN
 #include "../include/plugin.h"
-struct ged_cmd_impl view2model_vec_cmd_impl = {
-    "view2model_vec",
-    ged_view2model_core_vec,
-    GED_CMD_DEFAULT
+
+#ifdef GED_PLUGIN
+static bu_plugin_cmd pcommands[] = {
+    { "view2model_vec",            ged_view2model_vec_core }
 };
-
-const struct ged_cmd view2model_vec_cmd = { &view2model_vec_cmd_impl };
-const struct ged_cmd *view2model_vec_cmds[] = { &view2model_vec_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  view2model_vec_cmds, 1 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+static bu_plugin_manifest pinfo = {
+    "libged_view2model_vec",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
+
+
 
 /*
  * Local Variables:

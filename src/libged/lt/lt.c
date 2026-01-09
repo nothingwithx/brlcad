@@ -164,25 +164,23 @@ ged_lt_core(struct ged *gedp, int argc, const char *argv[])
     return list_children(gedp, dp, c_sep);
 }
 
+#include "../include/plugin.h"
 
 #ifdef GED_PLUGIN
-#include "../include/plugin.h"
-struct ged_cmd_impl lt_cmd_impl = {
-    "lt",
-    ged_lt_core,
-    GED_CMD_DEFAULT
+static bu_plugin_cmd pcommands[] = {
+    { "lt",            ged_lt_core }
 };
-
-const struct ged_cmd lt_cmd = { &lt_cmd_impl };
-const struct ged_cmd *lt_cmds[] = { &lt_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  lt_cmds, 1 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+static bu_plugin_manifest pinfo = {
+    "libged_lt",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
+
 
 /*
  * Local Variables:

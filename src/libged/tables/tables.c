@@ -617,30 +617,27 @@ end:
 }
 
 
-#ifdef GED_PLUGIN
 #include "../include/plugin.h"
 
-struct ged_cmd_impl tables_cmd_impl = {"tables", ged_tables_core, GED_CMD_DEFAULT};
-const struct ged_cmd tables_cmd = { &tables_cmd_impl };
-
-struct ged_cmd_impl idents_cmd_impl = {"idents", ged_tables_core, GED_CMD_DEFAULT};
-const struct ged_cmd idents_cmd = { &idents_cmd_impl };
-
-struct ged_cmd_impl regions_cmd_impl = {"regions", ged_tables_core, GED_CMD_DEFAULT};
-const struct ged_cmd regions_cmd = { &regions_cmd_impl };
-
-struct ged_cmd_impl solids_cmd_impl = {"solids", ged_tables_core, GED_CMD_DEFAULT};
-const struct ged_cmd solids_cmd = { &solids_cmd_impl };
-
-const struct ged_cmd *tables_cmds[] = { &tables_cmd, &idents_cmd, &regions_cmd, &solids_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  tables_cmds, 4 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+#ifdef GED_PLUGIN
+static bu_plugin_cmd pcommands[] = {
+    { "idents",            ged_tables_core },
+    { "regions",           ged_tables_core },
+    { "solids",            ged_tables_core },
+    { "tables",            ged_tables_core }
+};
+static bu_plugin_manifest pinfo = {
+    "libged_tables",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
+
+
 
 /*
  * Local Variables:

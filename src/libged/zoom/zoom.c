@@ -65,23 +65,22 @@ ged_zoom_core(struct ged *gedp, int argc, const char *argv[])
     return zoom(gedp, sf);
 }
 
-#ifdef GED_PLUGIN
+
 #include "../include/plugin.h"
-struct ged_cmd_impl zoom_cmd_impl = {
-    "zoom",
-    ged_zoom_core,
-    GED_CMD_VIEW_CALLBACK | GED_CMD_UPDATE_VIEW
+
+#ifdef GED_PLUGIN
+static bu_plugin_cmd pcommands[] = {
+    { "zoom",            ged_zoom_core }
 };
-
-const struct ged_cmd zoom_cmd = { &zoom_cmd_impl };
-const struct ged_cmd *zoom_cmds[] = { &zoom_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  zoom_cmds, 1 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+static bu_plugin_manifest pinfo = {
+    "libged_zoom",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
 
 

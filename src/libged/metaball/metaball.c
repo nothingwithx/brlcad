@@ -548,29 +548,28 @@ ged_metaball_move_pnt_core(struct ged *gedp, int argc, const char *argv[])
     return BRLCAD_OK;
 }
 
-#ifdef GED_PLUGIN
+
 #include "../include/plugin.h"
-struct ged_cmd_impl metaball_delete_pnt_cmd_impl = {"metaball_delete_pnt", ged_metaball_delete_pnt_core, GED_CMD_DEFAULT};
-const struct ged_cmd metaball_delete_pnt_cmd = { &metaball_delete_pnt_cmd_impl };
 
-struct ged_cmd_impl metaball_move_pnt_cmd_impl = {"metaball_move_pnt", ged_metaball_move_pnt_core, GED_CMD_DEFAULT};
-const struct ged_cmd metaball_move_pnt_cmd = { &metaball_move_pnt_cmd_impl };
-
-struct ged_cmd_impl metaball_mouse_move_pnt_cmd_impl = {"mouse_move_metaball_pnt", ged_metaball_move_pnt_core, GED_CMD_DEFAULT};
-const struct ged_cmd metaball_mouse_move_pnt_cmd = { &metaball_mouse_move_pnt_cmd_impl };
-
-struct ged_cmd_impl metaball_add_pnt_cmd_impl = {"mouse_add_metaball_pnt", ged_metaball_add_pnt_core, GED_CMD_DEFAULT};
-const struct ged_cmd metaball_add_pnt_cmd = { &metaball_add_pnt_cmd_impl };
-
-const struct ged_cmd *metaball_cmds[] = { &metaball_delete_pnt_cmd, &metaball_mouse_move_pnt_cmd, &metaball_move_pnt_cmd, &metaball_add_pnt_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  metaball_cmds, 4 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+#ifdef GED_PLUGIN
+static bu_plugin_cmd pcommands[] = {
+    { "metaball_delete_pnt",          ged_metaball_delete_pnt_core },
+    { "metaball_move_pnt",            ged_metaball_move_pnt_core },
+    { "mouse_move_metaball_pnt",      ged_metaball_move_pnt_core },
+    { "mouse_add_metaball_pnt",       ged_metaball_add_pnt_core }
+};
+static bu_plugin_manifest pinfo = {
+    "libged_metaball",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
+
+
 
 /*
  * Local Variables:

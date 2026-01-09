@@ -1069,17 +1069,25 @@ ged_graph(struct ged *gedp, int argc, const char *argv[])
 
 #endif /* HAVE_ADAPTAGRAMS */
 
-#ifdef GED_PLUGIN
 #include "../include/plugin.h"
+
+#ifdef GED_PLUGIN
 extern "C" {
-    struct ged_cmd_impl graph_cmd_impl = { "graph", ged_graph, GED_CMD_DEFAULT };
-    const struct ged_cmd graph_cmd = { &graph_cmd_impl };
-    const struct ged_cmd *graph_cmds[] = { &graph_cmd, NULL };
-    static const struct ged_plugin pinfo = { GED_API, graph_cmds, 1 };
-    COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-    { return &pinfo; }
+    static bu_plugin_cmd pcommands[] = {
+	{ "graph",  ged_graph}
+    };
+    static bu_plugin_manifest pinfo = {
+	"libged_graph",
+	1,
+	(unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+	pcommands,
+	BU_PLUGIN_ABI_VERSION,
+	sizeof(bu_plugin_manifest)
+    };
+    BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 }
 #endif
+
 
 // Local Variables:
 // tab-width: 8

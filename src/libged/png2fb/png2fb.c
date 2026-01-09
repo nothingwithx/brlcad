@@ -195,24 +195,23 @@ ged_png2fb_core(struct ged *gedp, int argc, const char *argv[])
 }
 
 
-#ifdef GED_PLUGIN
 #include "../include/plugin.h"
-struct ged_cmd_impl png2fb_cmd_impl = {
-    "png2fb",
-    ged_png2fb_core,
-    GED_CMD_DEFAULT
+
+#ifdef GED_PLUGIN
+static bu_plugin_cmd pcommands[] = {
+    { "png2fb",            ged_png2fb_core }
 };
-
-const struct ged_cmd png2fb_cmd = { &png2fb_cmd_impl };
-const struct ged_cmd *png2fb_cmds[] = { &png2fb_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  png2fb_cmds, 1 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+static bu_plugin_manifest pinfo = {
+    "libged_png2fb",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
+
 
 /*
  * Local Variables:

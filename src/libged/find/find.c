@@ -131,31 +131,22 @@ ged_find_core(struct ged *gedp, int argc, const char *argv[])
     return BRLCAD_OK;
 }
 
+#include "../include/plugin.h"
 
 #ifdef GED_PLUGIN
-#include "../include/plugin.h"
-struct ged_cmd_impl find_cmd_impl = {
-    "find",
-    ged_find_core,
-    GED_CMD_DEFAULT
+static bu_plugin_cmd pcommands[] = {
+    { "dbfind",          ged_find_core },
+    { "find",            ged_find_core }
 };
-const struct ged_cmd find_cmd = { &find_cmd_impl };
-
-struct ged_cmd_impl dbfind_cmd_impl = {
-    "dbfind",
-    ged_find_core,
-    GED_CMD_DEFAULT
+static bu_plugin_manifest pinfo = {
+    "libged_find",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
 };
-const struct ged_cmd dbfind_cmd = { &dbfind_cmd_impl };
-
-const struct ged_cmd *find_cmds[] = { &find_cmd, &dbfind_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  find_cmds, 2 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
 
 /*

@@ -63,7 +63,7 @@ ged_exec(struct ged *gedp, int argc, const char *argv[])
         libged_init();
     });
 
-    if (ged_registered_count() == 0) {
+    if (bu_plugin_cmd_count() == 0) {
         // Fallback path if something went wrong with one-time init:
         libged_init();
     }
@@ -80,9 +80,9 @@ ged_exec(struct ged *gedp, int argc, const char *argv[])
     std::string cmdname = bu_vls_cstr(&cmdvls);
     bu_vls_free(&cmdvls);
 
-    /* Lookup command */
-    const struct ged_cmd *cmd = ged_get_command(cmdname.c_str());
-    if (!cmd) {
+    /* Lookup command via generalized registry */
+    bu_plugin_cmd_impl fn = bu_plugin_cmd_get(cmdname.c_str());
+    if (!fn) {
         bu_vls_printf(gedp->ged_result_str, "unknown command: %s", cmdname.c_str());
         return (BRLCAD_ERROR | GED_UNKNOWN);
     }
@@ -115,7 +115,7 @@ ged_exec(struct ged *gedp, int argc, const char *argv[])
     // unless we have the necessary callbacks defined in gedp
 
     // Preliminaries complete - do the actual command execution call
-    cret = (*cmd->i->cmd)(gedp, argc, argv);
+    cret = fn(gedp, argc, argv);
 
     // If we didn't execute successfully, don't execute the post run hook.  (If
     // a specific command wants to anyway, it can do so in its own

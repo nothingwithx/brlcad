@@ -163,27 +163,24 @@ ged_opendb_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
-extern "C" {
 #ifdef GED_PLUGIN
-struct ged_cmd_impl reopen_cmd_impl = {"reopen", ged_opendb_core, GED_CMD_DEFAULT};
-const struct ged_cmd reopen_cmd = { &reopen_cmd_impl };
-
-struct ged_cmd_impl opendb_cmd_impl = {"opendb", ged_opendb_core, GED_CMD_DEFAULT};
-const struct ged_cmd opendb_cmd = { &opendb_cmd_impl };
-
-struct ged_cmd_impl open_cmd_impl = {"open", ged_opendb_core, GED_CMD_DEFAULT};
-const struct ged_cmd open_cmd = { &open_cmd_impl };
-
-const struct ged_cmd *open_cmds[] = { &reopen_cmd, &opendb_cmd, &open_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  open_cmds, 3 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
+extern "C" {
+    static bu_plugin_cmd pcommands[] = {
+	{ "reopen",         ged_opendb_core },
+	{ "opendb",         ged_opendb_core },
+	{ "open",           ged_opendb_core }
+    };
+    static bu_plugin_manifest pinfo = {
+	"libged_open",
+	1,
+	(unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+	pcommands,
+	BU_PLUGIN_ABI_VERSION,
+	sizeof(bu_plugin_manifest)
+    };
+    BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 }
 #endif /* GED_PLUGIN */
-}
 
 
 // Local Variables:

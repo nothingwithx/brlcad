@@ -27,6 +27,11 @@
 #include "../ged_private.h"
 #include "brlcad_version.h"
 
+#define BU_PLUGIN_NAME ged
+#define BU_PLUGIN_CMD_RET int
+#define BU_PLUGIN_CMD_ARGS struct ged *, int, const char **
+#include "../../libbu/bu_plugin.h"
+
 #define GED_API (2*1000000 + (BRLCAD_VERSION_MAJOR*10000) + (BRLCAD_VERSION_MINOR*100) + BRLCAD_VERSION_PATCH)
 
 #define GED_CMD_DEFAULT       0

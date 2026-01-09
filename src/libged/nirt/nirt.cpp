@@ -734,32 +734,25 @@ ged_vnirt_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
-extern "C" {
 #ifdef GED_PLUGIN
-struct ged_cmd_impl nirt_cmd_impl = {"nirt", ged_nirt_core, GED_CMD_DEFAULT};
-const struct ged_cmd nirt_cmd = { &nirt_cmd_impl };
-
-struct ged_cmd_impl query_ray_cmd_impl = {"query_ray", ged_nirt_core, GED_CMD_DEFAULT};
-const struct ged_cmd query_ray_cmd = { &query_ray_cmd_impl };
-
-struct ged_cmd_impl vnirt_cmd_impl = {"vnirt", ged_vnirt_core, GED_CMD_DEFAULT};
-const struct ged_cmd vnirt_cmd = { &vnirt_cmd_impl };
-
-struct ged_cmd_impl vquery_ray_cmd_impl = {"vquery_ray", ged_vnirt_core, GED_CMD_DEFAULT};
-const struct ged_cmd vquery_ray_cmd = { &vquery_ray_cmd_impl };
-
-const struct ged_cmd *nirt_cmds[] = { &nirt_cmd, &vnirt_cmd, &query_ray_cmd, &vquery_ray_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  nirt_cmds, 4 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+extern "C" {
+    static bu_plugin_cmd pcommands[] = {
+	{ "nirt",            ged_nirt_core },
+	{ "query_ray",       ged_nirt_core },
+	{ "vnirt",           ged_vnirt_core },
+	{ "vquery_ray",      ged_vnirt_core }
+    };
+    static bu_plugin_manifest pinfo = {
+	"libged_nirt",
+	1,
+	(unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+	pcommands,
+	BU_PLUGIN_ABI_VERSION,
+	sizeof(bu_plugin_manifest)
+    };
+    BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 }
 #endif /* GED_PLUGIN */
-
-
 
 // Local Variables:
 // tab-width: 8

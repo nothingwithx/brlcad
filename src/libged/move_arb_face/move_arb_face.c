@@ -244,24 +244,23 @@ if (face_idx > max_idx) { \
 }
 
 
-#ifdef GED_PLUGIN
 #include "../include/plugin.h"
-struct ged_cmd_impl move_arb_face_cmd_impl = {
-    "move_arb_face",
-    ged_move_arb_face_core,
-    GED_CMD_DEFAULT
+
+#ifdef GED_PLUGIN
+static bu_plugin_cmd pcommands[] = {
+    { "move_arb_face",            ged_move_arb_face_core }
 };
-
-const struct ged_cmd move_arb_face_cmd = { &move_arb_face_cmd_impl };
-const struct ged_cmd *move_arb_face_cmds[] = { &move_arb_face_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  move_arb_face_cmds, 1 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+static bu_plugin_manifest pinfo = {
+    "libged_move_arb_face",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
+
 
 /*
  * Local Variables:

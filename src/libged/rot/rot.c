@@ -46,24 +46,26 @@ ged_rot_core(struct ged *gedp, int argc, const char *argv[])
 }
 
 
-#ifdef GED_PLUGIN
 #include "../include/plugin.h"
-struct ged_cmd_impl rot_cmd_impl = {"rot", ged_rot_core, GED_CMD_DEFAULT};
-const struct ged_cmd rot_cmd = { &rot_cmd_impl };
 
 extern int ged_rotate_about_core(struct ged *gedp, int argc, const char *argv[]);
-struct ged_cmd_impl rotate_about_cmd_impl = {"rot_about", ged_rotate_about_core, GED_CMD_DEFAULT};
-const struct ged_cmd rotate_about_cmd = { &rotate_about_cmd_impl };
 
-const struct ged_cmd *rot_cmds[] = { &rot_cmd, &rotate_about_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  rot_cmds, 2 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+#ifdef GED_PLUGIN
+static bu_plugin_cmd pcommands[] = {
+    { "rot",            ged_rot_core },
+    { "rot_about",      ged_rotate_about_core }
+};
+static bu_plugin_manifest pinfo = {
+    "libged_rot",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
+
 
 /*
  * Local Variables:

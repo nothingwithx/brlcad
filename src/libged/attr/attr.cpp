@@ -67,23 +67,24 @@ ged_attr_core(struct ged *gedp, int argc, const char *argv[])
     return ret;
 }
 
-
+#include "../include/plugin.h"
 
 #ifdef GED_PLUGIN
-#include "../include/plugin.h"
 extern "C" {
-struct ged_cmd_impl attr_cmd_impl = { "attr", ged_attr_core, GED_CMD_DEFAULT };
-const struct ged_cmd attr_pcmd = { &attr_cmd_impl };
-const struct ged_cmd *attr_cmds[] = { &attr_pcmd,  NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  attr_cmds, 1 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
+    static bu_plugin_cmd pcommands[] = {
+	{ "attr",            ged_attr_core }
+    };
+    static bu_plugin_manifest pinfo = {
+	"libged_attr",
+	1,
+	(unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+	pcommands,
+	BU_PLUGIN_ABI_VERSION,
+	sizeof(bu_plugin_manifest)
+    };
+    BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 }
-}
-#endif
+#endif /* GED_PLUGIN */
 
 // Local Variables:
 // tab-width: 8

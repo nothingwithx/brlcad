@@ -179,24 +179,23 @@ ged_wcodes_core(struct ged *gedp, int argc, const char *argv[])
 }
 
 
-#ifdef GED_PLUGIN
 #include "../include/plugin.h"
-struct ged_cmd_impl wcodes_cmd_impl = {
-    "wcodes",
-    ged_wcodes_core,
-    GED_CMD_DEFAULT
+
+#ifdef GED_PLUGIN
+static bu_plugin_cmd pcommands[] = {
+    { "wcodes",            ged_wcodes_core }
 };
-
-const struct ged_cmd wcodes_cmd = { &wcodes_cmd_impl };
-const struct ged_cmd *wcodes_cmds[] = { &wcodes_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  wcodes_cmds, 1 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+static bu_plugin_manifest pinfo = {
+    "libged_wcodes",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
+
 
 /*
  * Local Variables:

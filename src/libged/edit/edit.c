@@ -2430,33 +2430,25 @@ err_missing_arg:
     return BRLCAD_ERROR;
 }
 
+#include "../include/plugin.h"
 
 #ifdef GED_PLUGIN
-#include "../include/plugin.h"
-struct ged_cmd_impl edit_cmd_impl = {"edit", ged_edit_core, GED_CMD_DEFAULT};
-const struct ged_cmd edit_cmd = { &edit_cmd_impl };
-
-struct ged_cmd_impl edarb_cmd_impl = {"edarb", ged_edarb_core, GED_CMD_DEFAULT};
-const struct ged_cmd edarb_cmd = { &edarb_cmd_impl };
-
-struct ged_cmd_impl protate_cmd_impl = {"protate", ged_protate_core, GED_CMD_DEFAULT};
-const struct ged_cmd protate_cmd = { &protate_cmd_impl };
-
-struct ged_cmd_impl pscale_cmd_impl = {"pscale", ged_pscale_core, GED_CMD_DEFAULT};
-const struct ged_cmd pscale_cmd = { &pscale_cmd_impl };
-
-struct ged_cmd_impl ptranslate_cmd_impl = {"ptranslate", ged_ptranslate_core, GED_CMD_DEFAULT};
-const struct ged_cmd ptranslate_cmd = { &ptranslate_cmd_impl };
-
-
-const struct ged_cmd *edit_pcmds[] = { &edit_cmd, &edarb_cmd, &protate_cmd, &pscale_cmd, &ptranslate_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  edit_pcmds, 5 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+static bu_plugin_cmd pcommands[] = {
+    { "edit",            ged_edit_core },
+    { "edarb",           ged_edarb_core },
+    { "protate",         ged_protate_core },
+    { "pscale",          ged_pscale_core },
+    { "ptranslate",      ged_ptranslate_core }
+};
+static bu_plugin_manifest pinfo = {
+    "libged_edit",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
 
 /*

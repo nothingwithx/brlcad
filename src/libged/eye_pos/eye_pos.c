@@ -93,24 +93,21 @@ ged_eye_pos_core(struct ged *gedp, int argc, const char *argv[])
     return BRLCAD_OK;
 }
 
+#include "../include/plugin.h"
 
 #ifdef GED_PLUGIN
-#include "../include/plugin.h"
-struct ged_cmd_impl eye_pos_cmd_impl = {
-    "eye_pos",
-    ged_eye_pos_core,
-    GED_CMD_DEFAULT
+static bu_plugin_cmd pcommands[] = {
+    { "eye_pos",            ged_eye_pos_core }
 };
-
-const struct ged_cmd eye_pos_cmd = { &eye_pos_cmd_impl };
-const struct ged_cmd *eye_pos_cmds[] = { &eye_pos_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  eye_pos_cmds, 1 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+static bu_plugin_manifest pinfo = {
+    "libged_eye_pos",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
 
 /*

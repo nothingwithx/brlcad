@@ -681,23 +681,22 @@ freemem:
     if (options.debug) bu_vls_free(options.debug_str);
     return (error) ? BRLCAD_ERROR : BRLCAD_OK;
 }
-#ifdef GED_PLUGIN
+
 #include "../include/plugin.h"
-struct ged_cmd_impl check_cmd_impl = {
-    "check",
-    ged_check_core,
-    GED_CMD_DEFAULT
+
+#ifdef GED_PLUGIN
+static bu_plugin_cmd pcommands[] = {
+    { "check",            ged_check_core }
 };
-
-const struct ged_cmd check_cmd = { &check_cmd_impl };
-const struct ged_cmd *check_cmds[] = { &check_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  check_cmds, 1 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+static bu_plugin_manifest pinfo = {
+    "libged_check",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
 
 /*

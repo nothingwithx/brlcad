@@ -87,25 +87,23 @@ ged_close_core(struct ged *gedp, int UNUSED(argc), const char **UNUSED(argv))
 
 #include "../include/plugin.h"
 
-extern "C" {
 #ifdef GED_PLUGIN
-
-struct ged_cmd_impl closedb_cmd_impl = {"closedb", ged_close_core, GED_CMD_DEFAULT};
-const struct ged_cmd closedb_cmd = { &closedb_cmd_impl };
-
-struct ged_cmd_impl close_cmd_impl = {"close", ged_close_core, GED_CMD_DEFAULT};
-const struct ged_cmd close_cmd = { &close_cmd_impl };
-
-const struct ged_cmd *close_cmds[] = { &closedb_cmd, &close_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  close_cmds, 2 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
+extern "C" {
+    static bu_plugin_cmd pcommands[] = {
+	{ "closedb",         ged_close_core },
+	{ "close",           ged_close_core }
+    };
+    static bu_plugin_manifest pinfo = {
+	"libged_close",
+	1,
+	(unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+	pcommands,
+	BU_PLUGIN_ABI_VERSION,
+	sizeof(bu_plugin_manifest)
+    };
+    BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 }
 #endif /* GED_PLUGIN */
-}
 
 // Local Variables:
 // tab-width: 8

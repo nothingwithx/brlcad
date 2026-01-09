@@ -137,26 +137,25 @@ ged_pathsum_core(struct ged *gedp, int argc, const char *argv[])
 }
 
 
-#ifdef GED_PLUGIN
 #include "../include/plugin.h"
-struct ged_cmd_impl pathsum_cmd_impl = {"pathsum", ged_pathsum_core, GED_CMD_DEFAULT};
-const struct ged_cmd pathsum_cmd = { &pathsum_cmd_impl };
 
-struct ged_cmd_impl listeval_cmd_impl = {"listeval", ged_pathsum_core, GED_CMD_DEFAULT};
-const struct ged_cmd listeval_cmd = { &listeval_cmd_impl };
-
-struct ged_cmd_impl paths_cmd_impl = {"paths", ged_pathsum_core, GED_CMD_DEFAULT};
-const struct ged_cmd paths_cmd = { &paths_cmd_impl };
-
-const struct ged_cmd *pathsum_cmds[] = { &pathsum_cmd, &listeval_cmd, &paths_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  pathsum_cmds, 3 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+#ifdef GED_PLUGIN
+static bu_plugin_cmd pcommands[] = {
+    { "listeval",           ged_pathsum_core },
+    { "paths",              ged_pathsum_core },
+    { "pathsum",            ged_pathsum_core }
+};
+static bu_plugin_manifest pinfo = {
+    "libged_pathsum",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
+
 
 /*
  * Local Variables:

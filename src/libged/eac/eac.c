@@ -107,24 +107,21 @@ ged_eac_core(struct ged *gedp, int argc, const char *argv[])
     return BRLCAD_OK;
 }
 
+#include "../include/plugin.h"
 
 #ifdef GED_PLUGIN
-#include "../include/plugin.h"
-struct ged_cmd_impl eac_cmd_impl = {
-    "eac",
-    ged_eac_core,
-    GED_CMD_DEFAULT
+static bu_plugin_cmd pcommands[] = {
+    { "eac",            ged_eac_core }
 };
-
-const struct ged_cmd eac_cmd = { &eac_cmd_impl };
-const struct ged_cmd *eac_cmds[] = { &eac_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  eac_cmds, 1 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+static bu_plugin_manifest pinfo = {
+    "libged_eac",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
 
 /*

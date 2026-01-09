@@ -180,34 +180,22 @@ bad:
     return BRLCAD_ERROR;
 }
 
+#include "../include/plugin.h"
 
 #ifdef GED_PLUGIN
-#include "../include/plugin.h"
-struct ged_cmd_impl illum_cmd_impl = {
-    "illum",
-    ged_illum_core,
-    GED_CMD_DEFAULT
+static bu_plugin_cmd pcommands[] = {
+    { "illum",            ged_illum_core },
+    { "labelvert",        ged_labelvert_core }
 };
-
-const struct ged_cmd illum_cmd = { &illum_cmd_impl };
-
-struct ged_cmd_impl labelvert_cmd_impl = {
-    "labelvert",
-    ged_labelvert_core,
-    GED_CMD_DEFAULT
+static bu_plugin_manifest pinfo = {
+    "libged_illum",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
 };
-
-const struct ged_cmd labelvert_cmd = { &labelvert_cmd_impl };
-
-
-const struct ged_cmd *illum_cmds[] = { &illum_cmd, &labelvert_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  illum_cmds, 2 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
 
 /*

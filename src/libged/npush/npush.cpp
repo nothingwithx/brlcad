@@ -1607,25 +1607,22 @@ ged_npush_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
-extern "C" {
 #ifdef GED_PLUGIN
-struct ged_cmd_impl npush_cmd_impl = {
-    "npush",
-    ged_npush_core,
-    GED_CMD_DEFAULT
-};
-
-const struct ged_cmd npush_cmd = { &npush_cmd_impl };
-const struct ged_cmd *npush_cmds[] = { &npush_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  npush_cmds, 1 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
+extern "C" {
+    static bu_plugin_cmd pcommands[] = {
+	{ "npush",            ged_npush_core }
+    };
+    static bu_plugin_manifest pinfo = {
+	"libged_npush",
+	1,
+	(unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+	pcommands,
+	BU_PLUGIN_ABI_VERSION,
+	sizeof(bu_plugin_manifest)
+    };
+    BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 }
 #endif /* GED_PLUGIN */
-}
 
 // Local Variables:
 // tab-width: 8

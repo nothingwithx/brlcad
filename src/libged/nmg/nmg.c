@@ -283,63 +283,31 @@ ged_nmg_core(struct ged *gedp, int argc, const char *argv[])
 }
 
 
-#ifdef GED_PLUGIN
 #include "../include/plugin.h"
 
-struct ged_cmd_impl nmg_cmd_impl = {"nmg", ged_nmg_core, GED_CMD_DEFAULT};
-const struct ged_cmd nmg_cmd = { &nmg_cmd_impl };
-
-struct ged_cmd_impl labelface_cmd_impl = {"labelface", ged_labelface_core, GED_CMD_DEFAULT};
-const struct ged_cmd labelface_cmd = { &labelface_cmd_impl };
-
-struct ged_cmd_impl nmg_cmface_cmd_impl = {"nmg_cmface", ged_nmg_cmface_core, GED_CMD_DEFAULT};
-const struct ged_cmd nmg_cmface_cmd = { &nmg_cmface_cmd_impl };
-
-struct ged_cmd_impl nmg_collapse_cmd_impl = {"nmg_collapse", ged_nmg_collapse_core, GED_CMD_DEFAULT};
-const struct ged_cmd nmg_collapse_cmd = { &nmg_collapse_cmd_impl };
-
-struct ged_cmd_impl nmg_fix_normals_cmd_impl = {"nmg_fix_normals", ged_nmg_fix_normals_core, GED_CMD_DEFAULT};
-const struct ged_cmd nmg_fix_normals_cmd = { &nmg_fix_normals_cmd_impl };
-
-struct ged_cmd_impl nmg_kill_f_cmd_impl = {"nmg_kill_f", ged_nmg_kill_f_core, GED_CMD_DEFAULT};
-const struct ged_cmd nmg_kill_f_cmd = { &nmg_kill_f_cmd_impl };
-
-struct ged_cmd_impl nmg_kill_v_cmd_impl = {"nmg_kill_v", ged_nmg_kill_v_core, GED_CMD_DEFAULT};
-const struct ged_cmd nmg_kill_v_cmd = { &nmg_kill_v_cmd_impl };
-
-struct ged_cmd_impl nmg_make_v_cmd_impl = {"nmg_make_v", ged_nmg_make_v_core, GED_CMD_DEFAULT};
-const struct ged_cmd nmg_make_v_cmd = { &nmg_make_v_cmd_impl };
-
-struct ged_cmd_impl nmg_mm_cmd_impl = {"nmg_mm", ged_nmg_mm_core, GED_CMD_DEFAULT};
-const struct ged_cmd nmg_mm_cmd = { &nmg_mm_cmd_impl };
-
-struct ged_cmd_impl nmg_move_v_cmd_impl = {"nmg_move_v", ged_nmg_move_v_core, GED_CMD_DEFAULT};
-const struct ged_cmd nmg_move_v_cmd = { &nmg_move_v_cmd_impl };
-
-struct ged_cmd_impl nmg_simplify_cmd_impl = {"nmg_simplify", ged_nmg_simplify_core, GED_CMD_DEFAULT};
-const struct ged_cmd nmg_simplify_cmd = { &nmg_simplify_cmd_impl };
-
-const struct ged_cmd *nmg_cmds[] = {
-    &nmg_cmd,
-    &labelface_cmd,
-    &nmg_cmface_cmd,
-    &nmg_collapse_cmd,
-    &nmg_fix_normals_cmd,
-    &nmg_kill_f_cmd,
-    &nmg_kill_v_cmd,
-    &nmg_make_v_cmd,
-    &nmg_mm_cmd,
-    &nmg_move_v_cmd,
-    &nmg_simplify_cmd,
-    NULL
+#ifdef GED_PLUGIN
+static bu_plugin_cmd pcommands[] = {
+    { "nmg",               ged_nmg_core },
+    { "labelface",         ged_labelface_core },
+    { "nmg_cmface",        ged_nmg_cmface_core },
+    { "nmg_collapse",      ged_nmg_collapse_core },
+    { "nmg_fix_normals",   ged_nmg_fix_normals_core },
+    { "nmg_kill_f",        ged_nmg_kill_f_core },
+    { "nmg_kill_v",        ged_nmg_kill_v_core },
+    { "nmg_make_v",        ged_nmg_make_v_core },
+    { "nmg_mm",            ged_nmg_mm_core },
+    { "nmg_move_v",        ged_nmg_move_v_core },
+    { "nmg_simplify",      ged_nmg_simplify_core }
 };
-
-static const struct ged_plugin pinfo = { GED_API,  nmg_cmds, 11 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+static bu_plugin_manifest pinfo = {
+    "libged_nmg",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
 
 /*

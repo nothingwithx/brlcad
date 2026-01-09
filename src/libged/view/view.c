@@ -864,97 +864,42 @@ ged_view_func_core(struct ged *gedp, int argc, const char *argv[])
 }
 
 
-
-#ifdef GED_PLUGIN
 #include "../include/plugin.h"
 
-struct ged_cmd_impl view_func_cmd_impl = {"view_func", ged_view_func_core, GED_CMD_DEFAULT};
-const struct ged_cmd view_func_cmd = { &view_func_cmd_impl };
-
-struct ged_cmd_impl view_cmd_impl = {"view", ged_view_func_core, GED_CMD_DEFAULT};
-const struct ged_cmd view_cmd = { &view_cmd_impl };
-
-struct ged_cmd_impl view2_cmd_impl = {"view2", ged_view_core, GED_CMD_DEFAULT};
-const struct ged_cmd view2_cmd = { &view2_cmd_impl };
-
-struct ged_cmd_impl ae_cmd_impl = {"ae", ged_aet_core, GED_CMD_DEFAULT};
-const struct ged_cmd ae_cmd = { &ae_cmd_impl };
-
-struct ged_cmd_impl aet_cmd_impl = {"aet", ged_aet_core, GED_CMD_DEFAULT};
-const struct ged_cmd aet_cmd = { &aet_cmd_impl };
-
-struct ged_cmd_impl autoview_cmd_impl = { "autoview", ged_autoview_core, GED_CMD_DEFAULT };
-const struct ged_cmd autoview_cmd = { &autoview_cmd_impl };
-
-struct ged_cmd_impl center_cmd_impl = {"center", ged_center_core, GED_CMD_DEFAULT};
-const struct ged_cmd center_cmd = { &center_cmd_impl };
-
-struct ged_cmd_impl data_lines_cmd_impl = {"data_lines", ged_view_data_lines, GED_CMD_DEFAULT};
-const struct ged_cmd data_lines_cmd = { &data_lines_cmd_impl };
-
-struct ged_cmd_impl eye_cmd_impl = {"eye", ged_eye_core, GED_CMD_DEFAULT};
-const struct ged_cmd eye_cmd = { &eye_cmd_impl };
-
-struct ged_cmd_impl eye_pt_cmd_impl = {"eye_pt", ged_eye_core, GED_CMD_DEFAULT};
-const struct ged_cmd eye_pt_cmd = { &eye_pt_cmd_impl };
-
-struct ged_cmd_impl lookat_cmd_impl = {"lookat", ged_lookat_core, GED_CMD_DEFAULT};
-const struct ged_cmd lookat_cmd = { &lookat_cmd_impl };
-
-struct ged_cmd_impl print_cmd_impl = {"print", _view_cmd_print, GED_CMD_DEFAULT};
-const struct ged_cmd print_cmd = { &print_cmd_impl };
-
-struct ged_cmd_impl quat_cmd_impl = {"quat", ged_quat_core, GED_CMD_DEFAULT};
-const struct ged_cmd quat_cmd = { &quat_cmd_impl };
-
-struct ged_cmd_impl qvrot_cmd_impl = {"qvrot", ged_qvrot_core, GED_CMD_DEFAULT};
-const struct ged_cmd qvrot_cmd = { &qvrot_cmd_impl };
-
-struct ged_cmd_impl saveview_cmd_impl = {"saveview", ged_saveview_core, GED_CMD_DEFAULT};
-const struct ged_cmd saveview_cmd = { &saveview_cmd_impl };
-
-struct ged_cmd_impl sdata_lines_cmd_impl = {"sdata_lines", ged_view_data_lines, GED_CMD_DEFAULT};
-const struct ged_cmd sdata_lines_cmd = { &sdata_lines_cmd_impl };
-
-struct ged_cmd_impl size_cmd_impl = {"size", ged_size_core, GED_CMD_DEFAULT};
-const struct ged_cmd size_cmd = { &size_cmd_impl };
-
-struct ged_cmd_impl viewdir_cmd_impl = {"viewdir", ged_viewdir_core, GED_CMD_DEFAULT};
-const struct ged_cmd viewdir_cmd = { &viewdir_cmd_impl };
-
-struct ged_cmd_impl ypr_cmd_impl = {"ypr", ged_ypr_core, GED_CMD_DEFAULT};
-const struct ged_cmd ypr_cmd = { &ypr_cmd_impl };
-
-const struct ged_cmd *view_cmds[] = {
-    &view_func_cmd,
-    &view_cmd,
-    &view2_cmd,
-    &ae_cmd,
-    &aet_cmd,
-    &autoview_cmd,
-    &center_cmd,
-    &data_lines_cmd,
-    &eye_cmd,
-    &eye_pt_cmd,
-    &lookat_cmd,
-    &print_cmd,
-    &quat_cmd,
-    &qvrot_cmd,
-    &saveview_cmd,
-    &sdata_lines_cmd,
-    &size_cmd,
-    &viewdir_cmd,
-    &ypr_cmd,
-    NULL
+#ifdef GED_PLUGIN
+static bu_plugin_cmd pcommands[] = {
+    { "ae",             ged_aet_core },
+    { "aet",            ged_aet_core },
+    { "autoview",       ged_autoview_core },
+    { "center",         ged_center_core },
+    { "data_lines",     ged_view_data_lines },
+    { "eye",            ged_eye_core },
+    { "eye_pt",         ged_eye_core },
+    { "lookat",         ged_lookat_core },
+    { "print",          _view_cmd_print },
+    { "quat",           ged_quat_core },
+    { "qvrot",          ged_qvrot_core },
+    { "saveview",       ged_saveview_core },
+    { "sdata_lines",    ged_view_data_lines },
+    { "size",           ged_size_core },
+    { "view",           ged_view_func_core },
+    { "view2",          ged_view_core },
+    { "view_func",      ged_view_func_core },
+    { "viewdir",        ged_viewdir_core },
+    { "ypr",            ged_ypr_core }
 };
-
-static const struct ged_plugin pinfo = { GED_API,  view_cmds, 19 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+static bu_plugin_manifest pinfo = {
+    "libged_view",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
+
+
 
 /*
  * Local Variables:

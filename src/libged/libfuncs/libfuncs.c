@@ -143,30 +143,24 @@ ged_mat_scale_about_pnt_core(struct ged *gedp,
     return BRLCAD_OK;
 }
 
-
-#ifdef GED_PLUGIN
 #include "../include/plugin.h"
 
-struct ged_cmd_impl mat4x3pnt_cmd_impl = {"mat4x3pnt", ged_mat4x3pnt_core, GED_CMD_DEFAULT};
-const struct ged_cmd mat4x3pnt_cmd = { &mat4x3pnt_cmd_impl };
-
-struct ged_cmd_impl mat_ae_cmd_impl = {"mat_ae", ged_mat_ae_core, GED_CMD_DEFAULT};
-const struct ged_cmd mat_ae_cmd = { &mat_ae_cmd_impl };
-
-struct ged_cmd_impl mat_mul_cmd_impl = {"mat_mul", ged_mat_mul_core, GED_CMD_DEFAULT};
-const struct ged_cmd mat_mul_cmd = { &mat_mul_cmd_impl };
-
-struct ged_cmd_impl mat_scale_about_pnt_cmd_impl = {"mat_scale_about_pnt", ged_mat_scale_about_pnt_core, GED_CMD_DEFAULT};
-const struct ged_cmd mat_scale_about_pnt_cmd = { &mat_scale_about_pnt_cmd_impl };
-
-const struct ged_cmd *mat4x3pnt_cmds[] = { &mat4x3pnt_cmd, &mat_ae_cmd, &mat_mul_cmd, &mat_scale_about_pnt_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  mat4x3pnt_cmds, 4 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+#ifdef GED_PLUGIN
+static bu_plugin_cmd pcommands[] = {
+    { "mat4x3pnt",            ged_mat4x3pnt_core },
+    { "mat_ae",               ged_mat_ae_core },
+    { "mat_mul",              ged_mat_mul_core },
+    { "mat_scale_about_pnt",  ged_mat_scale_about_pnt_core }
+};
+static bu_plugin_manifest pinfo = {
+    "libged_libfuncs",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
 
 /*

@@ -38,29 +38,24 @@ ged_quit_core(struct ged *UNUSED(gedp), int UNUSED(argc), const char **UNUSED(ar
 
 #include "../include/plugin.h"
 
-extern "C" {
 #ifdef GED_PLUGIN
-
-struct ged_cmd_impl exit_cmd_impl = {"exit", ged_quit_core, GED_CMD_DEFAULT};
-const struct ged_cmd exit_cmd = { &exit_cmd_impl };
-
-struct ged_cmd_impl q_cmd_impl = {"q", ged_quit_core, GED_CMD_DEFAULT};
-const struct ged_cmd q_cmd = { &q_cmd_impl };
-
-struct ged_cmd_impl quit_cmd_impl = {"quit", ged_quit_core, GED_CMD_DEFAULT};
-const struct ged_cmd quit_cmd = { &quit_cmd_impl };
-
-const struct ged_cmd *quit_cmds[] = { &exit_cmd, &q_cmd, &quit_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  quit_cmds, 3 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
+extern "C" {
+    static bu_plugin_cmd pcommands[] = {
+	{ "exit",            ged_quit_core },
+	{ "q",               ged_quit_core },
+	{ "quit",            ged_quit_core }
+    };
+    static bu_plugin_manifest pinfo = {
+	"libged_quit",
+	1,
+	(unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+	pcommands,
+	BU_PLUGIN_ABI_VERSION,
+	sizeof(bu_plugin_manifest)
+    };
+    BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 }
 #endif /* GED_PLUGIN */
-}
-
 
 // Local Variables:
 // tab-width: 8

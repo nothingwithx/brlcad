@@ -80,24 +80,23 @@ bad:
 }
 
 
-#ifdef GED_PLUGIN
 #include "../include/plugin.h"
-struct ged_cmd_impl shaded_mode_cmd_impl = {
-    "shaded_mode",
-    ged_shaded_mode_core,
-    GED_CMD_DEFAULT
+
+#ifdef GED_PLUGIN
+static bu_plugin_cmd pcommands[] = {
+    { "shaded_mode",            ged_shaded_mode_core }
 };
-
-const struct ged_cmd shaded_mode_cmd = { &shaded_mode_cmd_impl };
-const struct ged_cmd *shaded_mode_cmds[] = { &shaded_mode_cmd, NULL };
-
-static const struct ged_plugin pinfo = { GED_API,  shaded_mode_cmds, 1 };
-
-COMPILER_DLLEXPORT const struct ged_plugin *ged_plugin_info(void)
-{
-    return &pinfo;
-}
+static bu_plugin_manifest pinfo = {
+    "libged_shaded_mode",
+    1,
+    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
+    pcommands,
+    BU_PLUGIN_ABI_VERSION,
+    sizeof(bu_plugin_manifest)
+};
+BU_PLUGIN_DECLARE_MANIFEST(pinfo)
 #endif /* GED_PLUGIN */
+
 
 /*
  * Local Variables:

@@ -120,7 +120,7 @@ ged_list_command_names(struct bu_vls *out_csv)
 	(void)impl;
 	struct bu_vls *v = (struct bu_vls *)ud;
 	if (!name) return 0;
-	if (strncmp(name, "_mged_", 6) == 0) return 0; /* skip synthetic aliases */
+	if (bu_strncmp(name, "_mged_", 6) == 0) return 0; /* skip synthetic aliases */
 	if (bu_vls_strlen(v) > 0) bu_vls_printf(v, ",");
 	bu_vls_printf(v, "%s", name);
 	return 0;
@@ -137,7 +137,7 @@ ged_list_command_array(const char * const **cl, size_t *cnt)
     auto cb = [](const char *name, bu_plugin_cmd_impl impl, void *ud) -> int {
 	(void)impl;
 	if (!name) return 0;
-	if (strncmp(name, "_mged_", 6) == 0) return 0;
+	if (bu_strncmp(name, "_mged_", 6) == 0) return 0;
 	std::vector<std::string> *v = (std::vector<std::string> *)ud;
 	v->push_back(std::string(name));
 	return 0;

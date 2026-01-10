@@ -541,9 +541,9 @@ ged_clbk_set(struct ged *gedp, const char *cmd_str, int mode, bu_clbk_t f, void 
     Ged_Internal *gedip = gedp->i->i;
 
     /* Resolve command by name via registry */
-    const struct ged_cmd *cmd = ged_get_command(cmd_str);
+    bu_plugin_cmd_impl cmd = bu_plugin_cmd_get(cmd_str);
     if (!cmd)
-        return (BRLCAD_ERROR | GED_UNKNOWN);
+	return (BRLCAD_ERROR | GED_UNKNOWN);
 
     std::map<ged_func_ptr, std::pair<bu_clbk_t, void *>> *cm =
         (mode == BU_CLBK_PRE) ? &gedip->cmd_prerun_clbk :
@@ -551,11 +551,11 @@ ged_clbk_set(struct ged *gedp, const char *cmd_str, int mode, bu_clbk_t f, void 
         (mode == BU_CLBK_DURING) ? &gedip->cmd_during_clbk :
         &gedip->cmd_linger_clbk;
 
-    auto c_it = cm->find(cmd->i->cmd);
+    auto c_it = cm->find(cmd);
     if (c_it != cm->end())
         ret |= GED_OVERRIDE;
 
-    (*cm)[cmd->i->cmd] = std::make_pair(f, d);
+    (*cm)[cmd] = std::make_pair(f, d);
     return ret;
 }
 
@@ -569,7 +569,7 @@ ged_clbk_get(bu_clbk_t *f, void **d, struct ged *gedp, const char *cmd_str, int 
     Ged_Internal *gedip = gedp->i->i;
 
     /* Resolve command by name via registry */
-    const struct ged_cmd *cmd = ged_get_command(cmd_str);
+    bu_plugin_cmd_impl cmd = bu_plugin_cmd_get(cmd_str);
     if (!cmd)
         return (BRLCAD_ERROR | GED_UNKNOWN);
 
@@ -579,7 +579,7 @@ ged_clbk_get(bu_clbk_t *f, void **d, struct ged *gedp, const char *cmd_str, int 
         (mode == BU_CLBK_DURING) ? &gedip->cmd_during_clbk :
         &gedip->cmd_linger_clbk;
 
-    auto c_it = cm->find(cmd->i->cmd);
+    auto c_it = cm->find(cmd);
     if (c_it == cm->end()) {
         (*f) = NULL;
         (*d) = NULL;

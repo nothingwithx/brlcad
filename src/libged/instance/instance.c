@@ -80,6 +80,7 @@ ged_instance_core(struct ged *gedp, int argc, const char *argv[])
 
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
+    { "i",                   ged_instance_core },
     { "instance",            ged_instance_core }
 };
 static bu_plugin_manifest pinfo = {

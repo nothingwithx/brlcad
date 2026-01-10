@@ -105,14 +105,6 @@ ged_command_exists(const char *name)
     return bu_plugin_cmd_exists(name);
 }
 
-extern "C" const struct ged_cmd *
-ged_get_command(const char *name)
-{
-    /* Phase 4: libged no longer maintains struct ged_cmd registry */
-    (void)name;
-    return NULL;
-}
-
 extern "C" size_t
 ged_registered_count(void)
 {

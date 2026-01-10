@@ -678,7 +678,7 @@ struct CommandRegistrar {
 
 #define REGISTER_BU_PLUGIN_COMMAND(name, impl) \
     static ::bu_plugin_detail::CommandRegistrar \
-    BU_PLUGIN_UNIQUE_ID(name, impl)
+    BU_PLUGIN_UNIQUE_ID(name, impl) (name, impl)
 #endif
 
 

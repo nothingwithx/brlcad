@@ -129,6 +129,8 @@ int main(int argc, const char *argv[])
     /* Phase 3: detect generalized registration macro with string command names */
     std::set<std::string> cmd_names;
     std::regex reg_bu_cmd_macro(R"(REGISTER_BU_PLUGIN_COMMAND\s*\(\s*\"([^\"]+)\"\s*,)");
+    /* Phase 4: detect bu_plugin_cmd arrays used by the new plugin manifest pattern */
+    std::regex reg_pcmd_name(R"(\{\s*\"([A-Za-z0-9?_]+)\"\s*,)");
 
     for (const auto &fname : input_files) {
 	std::ifstream fs(fname);
@@ -146,6 +148,13 @@ int main(int argc, const char *argv[])
 	    std::smatch bm;
 	    if (std::regex_search(sline, bm, reg_bu_cmd_macro)) {
 		std::string cname = bm[1];
+		if (!cname.empty() && cname.find('?') == std::string::npos)
+		    cmd_names.insert(cname);
+	    }
+	    /* Phase 4: capture command names from bu_plugin_cmd initializers */
+	    std::smatch pm;
+	    if (std::regex_search(sline, pm, reg_pcmd_name)) {
+		std::string cname = pm[1];
 		if (!cname.empty() && cname.find('?') == std::string::npos)
 		    cmd_names.insert(cname);
 	    }

@@ -59,7 +59,6 @@ extern "C" {
     /* Registry API: ensure all callers have prototypes in scope */
     int ged_register_command(const struct ged_cmd *cmd);
     int ged_command_exists(const char *name);
-    const struct ged_cmd *ged_get_command(const char *name);
     size_t ged_registered_count(void);
     void ged_list_command_names(struct bu_vls *out_csv);
     void ged_list_command_array(const char * const **cl, size_t *cnt);

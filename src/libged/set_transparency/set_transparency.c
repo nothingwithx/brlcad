@@ -130,7 +130,7 @@ static bu_plugin_cmd pcommands[] = {
     { "set_transparency",            ged_set_transparency_core }
 };
 static bu_plugin_manifest pinfo = {
-    "libged_lc",
+    "libged_set_transparency",
     1,
     (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
     pcommands,

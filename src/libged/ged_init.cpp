@@ -49,21 +49,6 @@
 #define BU_PLUGIN_IMPLEMENTATION
 #include "./include/plugin.h"
 
-/* -------------------------------------------------------------------------- */
-/* Registry Data                                                              */
-/* -------------------------------------------------------------------------- */
-
-struct ged_registry {
-    bool plugins_scanned = false;
-    bool shutdown = false;
-};
-
-// Meyers singleton
-static ged_registry &get_registry() {
-    static ged_registry G;
-    return G;
-}
-
 static struct bu_vls init_msgs = BU_VLS_INIT_ZERO;
 
 /* Optional: thread safety (add bu_mutex if needed in future) */
@@ -76,10 +61,6 @@ extern "C" int
 ged_register_command(const struct ged_cmd *cmd)
 {
     if (!cmd || !cmd->i || !cmd->i->cname || !cmd->i->cmd) return -1;
-
-    ged_registry &G = get_registry();
-
-    if (G.shutdown) return -2;
 
     std::string key(cmd->i->cname);
 
@@ -159,18 +140,13 @@ ged_list_command_array(const char * const **cl, size_t *cnt)
 extern "C" void
 ged_scan_plugins(void)
 {
-    ged_registry &G = get_registry();
-    if (G.shutdown) return;
-    if (G.plugins_scanned) return;
     const char *env_block = getenv("GED_NO_PLUGIN_SCAN");
     if (env_block && BU_STR_EQUAL(env_block, "1")) {
-	G.plugins_scanned = true;
 	return;
     }
 
     const char *ppath = bu_dir(NULL, 0, BU_DIR_LIBEXEC, "ged", NULL);
     if (!ppath) {
-	G.plugins_scanned = true;
 	return;
     }
 
@@ -189,7 +165,6 @@ ged_scan_plugins(void)
 
     bu_vls_free(&pattern);
     bu_argv_free(ged_nfiles, ged_filenames);
-    G.plugins_scanned = true;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -207,9 +182,6 @@ static void _ged_plugin_logger(int level, const char *msg)
 extern "C" void
 libged_init(void)
 {
-    ged_registry &G = get_registry();
-    if (G.shutdown) return;
-
     /* Bootstrap generalized registry and set logger */
     bu_plugin_set_logger(_ged_plugin_logger);
     (void)bu_plugin_init();
@@ -228,14 +200,10 @@ libged_init(void)
 extern "C" void
 libged_shutdown(void)
 {
-    ged_registry &G = get_registry();
-    if (G.shutdown) return;
-
     /* Generalized registry teardown */
     bu_plugin_shutdown();
 
     bu_vls_free(&init_msgs);
-    G.shutdown = true;
 }
 
 /* Provide existing init message accessor */
@@ -297,15 +265,6 @@ ged_cmd_list(const char * const **cl)
     ged_list_command_array(cl, &cnt);
     return cnt;
 }
-
-/* Legacy initializer object retained for compatibility */
-struct libged_initializer {
-    libged_initializer()  { libged_init(); }
-    ~libged_initializer() { /* Do NOT auto-shutdown – keep commands alive for app lifetime */ }
-};
-
-/* Instantiate global initializer (startup scan still runs once) */
-static libged_initializer LIBGED;
 
 // Local Variables:
 // tab-width: 8

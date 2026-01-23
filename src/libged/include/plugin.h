@@ -93,6 +93,7 @@ struct ged_cmd_autoreg {
 };
 
 #define REGISTER_GED_COMMAND(cmd_symbol)                                                    \
+    const struct ged_cmd cmd_symbol = { &cmd_symbol##_impl };                                 \
     GED_CMD_SET_ATTR const struct ged_cmd * __ged_cmd_ptr_##cmd_symbol = &cmd_symbol;       \
     static const struct ged_cmd * cmd_symbol##_keep_ptr = &cmd_symbol;                      \
     static ged_cmd_autoreg<const struct ged_cmd>                                            \
@@ -103,6 +104,7 @@ struct ged_cmd_autoreg {
 /* ======================= Pure C: GCC / Clang ======================= */
 #if defined(__APPLE__)
 #define REGISTER_GED_COMMAND(cmd_symbol)                                                \
+    const struct ged_cmd cmd_symbol = { &cmd_symbol##_impl };                             \
     __attribute__((used)) const struct ged_cmd *                                        \
         __ged_cmd_ptr_##cmd_symbol = &cmd_symbol;                                       \
     static const struct ged_cmd * cmd_symbol##_keep __attribute__((used)) = &cmd_symbol;\
@@ -110,6 +112,7 @@ struct ged_cmd_autoreg {
     static void register_##cmd_symbol(void) { (void)ged_register_command(&cmd_symbol); }
 #elif defined(__GNUC__) || defined(__clang__)
 #define REGISTER_GED_COMMAND(cmd_symbol)                                                    \
+    const struct ged_cmd cmd_symbol = { &cmd_symbol##_impl };                                 \
     __attribute__((used, section("ged_cmd_set"))) const struct ged_cmd *                    \
     __ged_cmd_ptr_##cmd_symbol = &cmd_symbol;                                           \
     static const struct ged_cmd * cmd_symbol##_keep __attribute__((used)) = &cmd_symbol;    \
@@ -131,6 +134,7 @@ struct ged_cmd_autoreg {
  */
 #pragma section(".CRT$XCU", read)
 #define REGISTER_GED_COMMAND(cmd_symbol)                                                    \
+    const struct ged_cmd cmd_symbol = { &cmd_symbol##_impl };                                 \
     __declspec(allocate(".rdata")) const struct ged_cmd * volatile                          \
     __ged_cmd_ptr_##cmd_symbol = &cmd_symbol;                                           \
     static void __cdecl register_##cmd_symbol(void) {                                       \

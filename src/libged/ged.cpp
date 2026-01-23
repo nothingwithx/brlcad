@@ -541,6 +541,7 @@ ged_clbk_set(struct ged *gedp, const char *cmd_str, int mode, bu_clbk_t f, void 
     Ged_Internal *gedip = gedp->i->i;
 
     /* Resolve command by name via registry */
+    ged_ensure_initialized();
     bu_plugin_cmd_impl cmd = bu_plugin_cmd_get(cmd_str);
     if (!cmd)
 	return (BRLCAD_ERROR | GED_UNKNOWN);
@@ -569,6 +570,7 @@ ged_clbk_get(bu_clbk_t *f, void **d, struct ged *gedp, const char *cmd_str, int 
     Ged_Internal *gedip = gedp->i->i;
 
     /* Resolve command by name via registry */
+    ged_ensure_initialized();
     bu_plugin_cmd_impl cmd = bu_plugin_cmd_get(cmd_str);
     if (!cmd)
         return (BRLCAD_ERROR | GED_UNKNOWN);

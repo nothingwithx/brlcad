@@ -305,14 +305,13 @@ int main(int argc, const char *argv[])
 	ofs << GEN_MARKER << "\n";
 	ofs << "#include \"plugin.h\"\n\n";
 	for (const auto &cmd_macro : static_cmd_sorted) {
-	    ofs << "extern const struct ged_cmd * __ged_cmd_ptr_" << cmd_macro << ";\n";
+	    ofs << "extern \"C\" const struct ged_cmd * const __ged_cmd_ptr_" << cmd_macro << ";\n";
 	}
 	ofs << "\nextern \"C\" void ged_force_static_registration(void)\n{\n";
-	ofs << "    const void *volatile dummy[] = {\n";
 	for (const auto &cmd_macro : static_cmd_sorted) {
-	    ofs << "        &__ged_cmd_ptr_" << cmd_macro << ",\n";
+	    ofs << "    (void)ged_register_command(__ged_cmd_ptr_" << cmd_macro << ");\n";
 	}
-	ofs << "    };\n    (void)dummy;\n}\n";
+	ofs << "}\n";
 	ofs.close();
 	return EXIT_SUCCESS;
     }

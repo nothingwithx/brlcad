@@ -83,18 +83,21 @@ ged_command_exists(const char *name)
     if (!name)
 	return 0;
 
+    ged_ensure_initialized();
     return bu_plugin_cmd_exists(name);
 }
 
 extern "C" size_t
 ged_registered_count(void)
 {
+    ged_ensure_initialized();
     return bu_plugin_cmd_count();
 }
 
 extern "C" void
 ged_list_command_names(struct bu_vls *out_csv)
 {
+    ged_ensure_initialized();
     if (!out_csv) return;
     bu_vls_trunc(out_csv, 0);
     auto cb = [](const char *name, bu_plugin_cmd_impl impl, void *ud) -> int {
@@ -113,6 +116,7 @@ ged_list_command_names(struct bu_vls *out_csv)
 extern "C" void
 ged_list_command_array(const char * const **cl, size_t *cnt)
 {
+    ged_ensure_initialized();
     if (!cl || !cnt) return;
     std::vector<std::string> names;
     auto cb = [](const char *name, bu_plugin_cmd_impl impl, void *ud) -> int {
@@ -137,8 +141,8 @@ ged_list_command_array(const char * const **cl, size_t *cnt)
 /* Plugin Loading                                                             */
 /* -------------------------------------------------------------------------- */
 
-extern "C" void
-ged_scan_plugins(void)
+static void
+scan_plugins(void)
 {
     const char *env_block = getenv("GED_NO_PLUGIN_SCAN");
     if (env_block && BU_STR_EQUAL(env_block, "1")) {
@@ -179,7 +183,7 @@ static void _ged_plugin_logger(int level, const char *msg)
     if (msg) bu_vls_printf(&init_msgs, "%s\n", msg);
 }
 
-extern "C" void
+static void
 libged_init(void)
 {
     /* Bootstrap generalized registry and set logger */
@@ -194,7 +198,17 @@ libged_init(void)
      * Any that have will have already populated the registry through ged_register_command.
      * We proceed to scan plugins once to add plugin-only and user-provided commands.
      */
-    ged_scan_plugins();
+    scan_plugins();
+}
+
+static std::once_flag g_init_once;
+
+extern "C" void ged_ensure_initialized()
+{
+    std::call_once(g_init_once, [](){
+        // Safe early init + full init path
+        libged_init();  // sets logger, initializes plugin core, does static reg (if enabled) and scans plugins once
+    });
 }
 
 extern "C" void
@@ -210,6 +224,7 @@ libged_shutdown(void)
 extern "C" const char *
 ged_init_msgs()
 {
+    ged_ensure_initialized();
     return bu_vls_cstr(&init_msgs);
 }
 
@@ -218,12 +233,14 @@ ged_init_msgs()
 extern "C" int
 ged_cmd_exists(const char *cmd)
 {
+    ged_ensure_initialized();
     return bu_plugin_cmd_exists(cmd);
 }
 
 extern "C" int
 ged_cmd_same(const char *cmd1, const char *cmd2)
 {
+    ged_ensure_initialized();
     bu_plugin_cmd_impl c1 = bu_plugin_cmd_get(cmd1);
     bu_plugin_cmd_impl c2 = bu_plugin_cmd_get(cmd2);
     if (!c1 || !c2) return 0;
@@ -235,6 +252,7 @@ extern "C" int
 ged_cmd_lookup(const char **ncmd, const char *cmd)
 {
     if (!ncmd || !cmd) return -1;
+    ged_ensure_initialized();
     size_t min_dist = (size_t)LONG_MAX;
     const char *closest = NULL;
     auto cb = [](const char *name, bu_plugin_cmd_impl impl, void *ud) -> int {
@@ -261,6 +279,7 @@ ged_cmd_lookup(const char **ncmd, const char *cmd)
 extern "C" size_t
 ged_cmd_list(const char * const **cl)
 {
+    ged_ensure_initialized();
     size_t cnt = 0;
     ged_list_command_array(cl, &cnt);
     return cnt;

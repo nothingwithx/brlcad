@@ -163,7 +163,7 @@ function(ged_plugin_library name)
     set(DO_STATIC FALSE)
   endif()
 
-  if (NOT ${name} STREQUAL "ged-bot")
+  if (NOT ${name} STREQUAL "ged-bot" AND NOT ${name} STREQUAL "ged-open")
     set(DO_STATIC FALSE)
   endif()
 

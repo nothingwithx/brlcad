@@ -163,6 +163,18 @@ ged_opendb_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl reopen_cmd_impl = {"reopen", ged_opendb_core, GED_CMD_DEFAULT};
+const struct ged_cmd reopen_cmd = { &reopen_cmd_impl };
+REGISTER_GED_COMMAND(reopen_cmd);
+
+struct ged_cmd_impl opendb_cmd_impl = {"opendb", ged_opendb_core, GED_CMD_DEFAULT};
+const struct ged_cmd opendb_cmd = { &opendb_cmd_impl };
+REGISTER_GED_COMMAND(opendb_cmd);
+
+struct ged_cmd_impl open_cmd_impl = {"open", ged_opendb_core, GED_CMD_DEFAULT};
+const struct ged_cmd open_cmd = { &open_cmd_impl };
+REGISTER_GED_COMMAND(open_cmd);
+
 #ifdef GED_PLUGIN
 extern "C" {
     static bu_plugin_cmd pcommands[] = {

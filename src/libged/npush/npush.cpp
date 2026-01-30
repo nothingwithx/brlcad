@@ -1607,6 +1607,9 @@ ged_npush_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl npush_impl = {"npush", ged_npush_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(npush);
+
 #ifdef GED_PLUGIN
 extern "C" {
     static bu_plugin_cmd pcommands[] = {

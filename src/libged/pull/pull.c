@@ -274,6 +274,9 @@ ged_pull_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl pull_impl = {"pull", ged_pull_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(pull);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "pull",            ged_pull_core }

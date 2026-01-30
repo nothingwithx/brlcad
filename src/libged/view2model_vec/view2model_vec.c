@@ -72,6 +72,9 @@ bad:
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl view2model_vec_impl = {"view2model_vec", ged_view2model_vec_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(view2model_vec);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "view2model_vec",            ged_view2model_vec_core }

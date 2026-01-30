@@ -38,6 +38,9 @@ ged_clear_core(struct ged *UNUSED(gedp), int UNUSED(argc), const char **UNUSED(a
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl clear_impl = {"clear", ged_clear_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(clear);
+
 #ifdef GED_PLUGIN
 extern "C" {
     static bu_plugin_cmd pcommands[] = {

@@ -596,6 +596,12 @@ ged_rselect_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl select_impl = {"select", ged_select_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(select);
+
+struct ged_cmd_impl rselect_impl = {"rselect", ged_rselect_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(rselect);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "select",            ged_select_core },

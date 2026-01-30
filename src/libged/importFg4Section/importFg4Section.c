@@ -62,6 +62,9 @@ ged_importFg4Section_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl importFg4Section_impl = {"importFg4Section", ged_importFg4Section_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(importFg4Section);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "importFg4Section",            ged_importFg4Section_core }

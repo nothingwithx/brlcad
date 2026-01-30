@@ -3580,6 +3580,9 @@ struct funtab joint_tab[] = {
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl joint_impl = {"joint", ged_joint_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(joint);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "joint",            ged_joint_core }

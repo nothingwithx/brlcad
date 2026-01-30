@@ -2801,6 +2801,9 @@ aborted:
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl gqa_impl = {"gqa", ged_gqa_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(gqa);
+
 #ifdef GED_PLUGIN
 extern "C" {
     static bu_plugin_cmd pcommands[] = {

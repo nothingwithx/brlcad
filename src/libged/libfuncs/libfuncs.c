@@ -145,6 +145,18 @@ ged_mat_scale_about_pnt_core(struct ged *gedp,
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl mat4x3pnt_impl = {"mat4x3pnt", ged_mat4x3pnt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(mat4x3pnt);
+
+struct ged_cmd_impl mat_ae_impl = {"mat_ae", ged_mat_ae_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(mat_ae);
+
+struct ged_cmd_impl mat_mul_impl = {"mat_mul", ged_mat_mul_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(mat_mul);
+
+struct ged_cmd_impl mat_scale_about_pnt_impl = {"mat_scale_about_pnt", ged_mat_scale_about_pnt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(mat_scale_about_pnt);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "mat4x3pnt",            ged_mat4x3pnt_core },

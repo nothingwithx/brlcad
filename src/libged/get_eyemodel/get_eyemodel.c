@@ -68,6 +68,9 @@ ged_get_eyemodel_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl get_eyemodel_impl = {"get_eyemodel", ged_get_eyemodel_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(get_eyemodel);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "get_eyemodel",            ged_get_eyemodel_core }

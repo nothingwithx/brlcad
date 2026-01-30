@@ -619,6 +619,18 @@ end:
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl idents_impl = {"idents", ged_tables_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(idents);
+
+struct ged_cmd_impl regions_impl = {"regions", ged_tables_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(regions);
+
+struct ged_cmd_impl solids_impl = {"solids", ged_tables_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(solids);
+
+struct ged_cmd_impl tables_impl = {"tables", ged_tables_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(tables);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "idents",            ged_tables_core },

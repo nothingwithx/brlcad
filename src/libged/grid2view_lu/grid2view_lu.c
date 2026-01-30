@@ -72,6 +72,9 @@ bad:
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl grid2view_lu_impl = {"grid2view_lu", ged_grid2view_lu_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(grid2view_lu);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "grid2view_lu",            ged_grid2view_lu_core }

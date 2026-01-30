@@ -160,6 +160,9 @@ wrapup:
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl copymat_impl = {"copymat", ged_copymat_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(copymat);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "copymat",            ged_copymat_core }

@@ -158,6 +158,9 @@ ged_rcodes_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl rcodes_impl = {"rcodes", ged_rcodes_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(rcodes);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "rcodes",            ged_rcodes_core }

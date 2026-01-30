@@ -106,6 +106,9 @@ ged_savekey_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl savekey_impl = {"savekey", ged_savekey_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(savekey);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "savekey",            ged_savekey_core }

@@ -1724,6 +1724,27 @@ ged_redraw_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl draw_impl = {"draw", ged_draw_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(draw);
+
+struct ged_cmd_impl E_impl = {"E", ged_E_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(E);
+
+struct ged_cmd_impl e_impl = {"e", ged_draw_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(e);
+
+struct ged_cmd_impl ev_impl = {"ev", ged_ev_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(ev);
+
+struct ged_cmd_impl redraw_impl = {"redraw", ged_redraw_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(redraw);
+
+struct ged_cmd_impl loadview_impl = {"loadview", ged_loadview_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(loadview);
+
+struct ged_cmd_impl preview_impl = {"preview", ged_preview_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(preview);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "draw",         ged_draw_core },

@@ -419,6 +419,9 @@ ged_qray_core(struct ged *gedp,
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl qray_impl = {"qray", ged_qray_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(qray);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "qray",            ged_qray_core }

@@ -350,6 +350,9 @@ ged_tree_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl tree_impl = {"tree", ged_tree_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(tree);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "tree",            ged_tree_core }

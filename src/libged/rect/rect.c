@@ -513,6 +513,9 @@ ged_rect_core(struct ged *gedp,
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl rect_impl = {"rect", ged_rect_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(rect);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "rect",            ged_rect_core }

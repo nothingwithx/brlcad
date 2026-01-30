@@ -182,6 +182,9 @@ ged_showmats_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl showmats_impl = {"showmats", ged_showmats_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(showmats);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "showmats",            ged_showmats_core }

@@ -1715,6 +1715,9 @@ ged_mater_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl mater_impl = {"mater", ged_mater_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(mater);
+
 #ifdef GED_PLUGIN
 extern "C" {
     static bu_plugin_cmd pcommands[] = {

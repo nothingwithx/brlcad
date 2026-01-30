@@ -131,6 +131,9 @@ ged_expand_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl expand_impl = {"expand", ged_expand_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(expand);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "expand",            ged_expand_core }

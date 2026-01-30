@@ -186,6 +186,12 @@ ged_erase_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl erase_impl = {"erase", ged_erase_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(erase);
+
+struct ged_cmd_impl d_impl = {"d", ged_erase_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(d);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "erase",        ged_erase_core },

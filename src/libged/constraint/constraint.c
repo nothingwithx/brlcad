@@ -358,6 +358,9 @@ ged_constraint_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl constraint_impl = {"constraint", ged_constraint_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(constraint);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "constraint",            ged_constraint_core }

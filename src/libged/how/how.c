@@ -144,6 +144,9 @@ good_label:
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl how_impl = {"how", ged_how_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(how);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "how",            ged_how_core }

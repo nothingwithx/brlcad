@@ -93,6 +93,9 @@ ged_setview_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl setview_impl = {"setview", ged_setview_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(setview);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "setview",            ged_setview_core }

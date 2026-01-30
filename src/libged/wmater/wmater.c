@@ -96,6 +96,9 @@ ged_wmater_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl wmater_impl = {"wmater", ged_wmater_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(wmater);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "wmater",            ged_wmater_core }

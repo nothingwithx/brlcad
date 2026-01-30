@@ -54,6 +54,9 @@ ged_echo_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl echo_impl = {"echo", ged_echo_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(echo);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "echo",            ged_echo_core }

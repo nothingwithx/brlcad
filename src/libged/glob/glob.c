@@ -240,6 +240,12 @@ ged_glob_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl db_glob_impl = {"db_glob", ged_glob_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(db_glob);
+
+struct ged_cmd_impl glob_impl = {"glob", ged_glob_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(glob);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "db_glob",         ged_glob_core },

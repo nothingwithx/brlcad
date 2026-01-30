@@ -109,6 +109,9 @@ ged_hide_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl hide_impl = {"hide", ged_hide_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(hide);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "hide",            ged_hide_core }

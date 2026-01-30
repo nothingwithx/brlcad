@@ -94,6 +94,9 @@ ged_log_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl log_impl = {"log", ged_log_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(log);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "log",            ged_log_core }

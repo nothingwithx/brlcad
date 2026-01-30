@@ -478,6 +478,12 @@ ged_ls_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl ls_impl = {"ls", ged_ls_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(ls);
+
+struct ged_cmd_impl t_impl = {"t", ged_ls_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(t);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "ls",            ged_ls_core },

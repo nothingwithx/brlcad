@@ -82,6 +82,9 @@ bad:
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl shaded_mode_impl = {"shaded_mode", ged_shaded_mode_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(shaded_mode);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "shaded_mode",            ged_shaded_mode_core }

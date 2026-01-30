@@ -62,6 +62,9 @@ ged_blast_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl blast_impl = {"blast", ged_blast_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(blast);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "B",              ged_blast_core },

@@ -285,6 +285,39 @@ ged_nmg_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl nmg_impl = {"nmg", ged_nmg_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(nmg);
+
+struct ged_cmd_impl labelface_impl = {"labelface", ged_labelface_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(labelface);
+
+struct ged_cmd_impl nmg_cmface_impl = {"nmg_cmface", ged_nmg_cmface_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(nmg_cmface);
+
+struct ged_cmd_impl nmg_collapse_impl = {"nmg_collapse", ged_nmg_collapse_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(nmg_collapse);
+
+struct ged_cmd_impl nmg_fix_normals_impl = {"nmg_fix_normals", ged_nmg_fix_normals_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(nmg_fix_normals);
+
+struct ged_cmd_impl nmg_kill_f_impl = {"nmg_kill_f", ged_nmg_kill_f_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(nmg_kill_f);
+
+struct ged_cmd_impl nmg_kill_v_impl = {"nmg_kill_v", ged_nmg_kill_v_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(nmg_kill_v);
+
+struct ged_cmd_impl nmg_make_v_impl = {"nmg_make_v", ged_nmg_make_v_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(nmg_make_v);
+
+struct ged_cmd_impl nmg_mm_impl = {"nmg_mm", ged_nmg_mm_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(nmg_mm);
+
+struct ged_cmd_impl nmg_move_v_impl = {"nmg_move_v", ged_nmg_move_v_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(nmg_move_v);
+
+struct ged_cmd_impl nmg_simplify_impl = {"nmg_simplify", ged_nmg_simplify_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(nmg_simplify);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "nmg",               ged_nmg_core },

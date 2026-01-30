@@ -241,6 +241,9 @@ ged_bo_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl bo_impl = {"bo", ged_bo_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(bo);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "bo",            ged_bo_core }

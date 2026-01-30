@@ -174,6 +174,9 @@ ged_rtwizard_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl rtwizard_impl = {"rtwizard", ged_rtwizard_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(rtwizard);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "rtwizard",            ged_rtwizard_core }

@@ -72,6 +72,9 @@ ged_set_output_script_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl set_output_script_impl = {"set_output_script", ged_set_output_script_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(set_output_script);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "set_output_script",            ged_set_output_script_core }

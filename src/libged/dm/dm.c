@@ -749,6 +749,18 @@ ged_dm_core(struct ged *gedp, int argc, const char *argv[])
 extern int ged_ert_core(struct ged *gedp, int argc, const char *argv[]);
 extern int ged_screen_grab_core(struct ged *gedp, int argc, const char *argv[]);
 
+struct ged_cmd_impl ert_impl = {"ert", ged_ert_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(ert);
+
+struct ged_cmd_impl dm_impl = {"dm", ged_dm_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(dm);
+
+struct ged_cmd_impl screen_grab_impl = {"screen_grab", ged_screen_grab_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(screen_grab);
+
+struct ged_cmd_impl screengrab_impl = {"screengrab", ged_screen_grab_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(screengrab);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "ert",            ged_ert_core },

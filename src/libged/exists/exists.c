@@ -491,6 +491,9 @@ ged_exists_core(struct ged *gedp, int argc, const char *argv_orig[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl exists_impl = {"exists", ged_exists_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(exists);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "exists",            ged_exists_core }

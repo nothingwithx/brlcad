@@ -375,6 +375,9 @@ gc_cleanup:
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl garbage_collect_impl = {"garbage_collect", ged_garbage_collect_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(garbage_collect);
+
 #ifdef GED_PLUGIN
 extern "C" {
     static bu_plugin_cmd pcommands[] = {

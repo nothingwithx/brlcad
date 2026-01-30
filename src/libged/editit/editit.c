@@ -100,6 +100,9 @@ ged_editit_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl editit_impl = {"editit", ged_editit_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(editit);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "editit",            ged_editit_core }

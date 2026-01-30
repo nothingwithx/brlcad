@@ -295,6 +295,9 @@ ged_edcodes_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl edcodes_impl = {"edcodes", ged_edcodes_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(edcodes);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "edcodes",            ged_edcodes_core }

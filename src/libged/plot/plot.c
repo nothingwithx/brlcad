@@ -295,6 +295,9 @@ ged_plot_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl plot_impl = {"plot", ged_plot_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(plot);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "plot",            ged_plot_core }

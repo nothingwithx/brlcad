@@ -79,6 +79,9 @@ ged_perspective_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl perspective_impl = {"perspective", ged_perspective_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(perspective);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "perspective",            ged_perspective_core }

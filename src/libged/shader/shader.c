@@ -82,6 +82,9 @@ ged_shader_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl shader_impl = {"shader", ged_shader_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(shader);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "shader",            ged_shader_core }

@@ -150,6 +150,9 @@ ged_dsp_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl dsp_impl = {"dsp", ged_dsp_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(dsp);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "dsp",            ged_dsp_core }

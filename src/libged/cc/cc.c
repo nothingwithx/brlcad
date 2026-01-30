@@ -81,6 +81,9 @@ ged_cc_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl cc_impl = {"cc", ged_cc_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(cc);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "cc",            ged_cc_core }

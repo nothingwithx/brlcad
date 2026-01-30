@@ -54,6 +54,9 @@ ged_view2model_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl view2model_impl = {"view2model", ged_view2model_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(view2model);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "view2model",            ged_view2model_core }

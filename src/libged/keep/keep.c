@@ -234,6 +234,9 @@ ged_keep_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl keep_impl = {"keep", ged_keep_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(keep);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "keep",            ged_keep_core }

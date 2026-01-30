@@ -125,6 +125,9 @@ ged_prcolor_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl prcolor_impl = {"prcolor", ged_prcolor_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(prcolor);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "prcolor",            ged_prcolor_core }

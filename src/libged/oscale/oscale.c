@@ -132,6 +132,9 @@ ged_oscale_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl oscale_impl = {"oscale", ged_oscale_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(oscale);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "oscale",            ged_oscale_core }

@@ -136,6 +136,9 @@ ged_shells_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl shells_impl = {"shells", ged_shells_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(shells);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "shells",            ged_shells_core }

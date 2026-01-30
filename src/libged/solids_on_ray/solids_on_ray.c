@@ -296,6 +296,9 @@ ged_solids_on_ray_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl solids_on_ray_impl = {"solids_on_ray", ged_solids_on_ray_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(solids_on_ray);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "solids_on_ray",            ged_solids_on_ray_core }

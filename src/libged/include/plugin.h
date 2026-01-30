@@ -85,15 +85,28 @@ extern "C" {
 
 #ifdef __cplusplus
 #define REGISTER_GED_COMMAND(cmd_symbol)                                        \
-    GED_CMD_USED const struct ged_cmd cmd_symbol = { &cmd_symbol##_impl };      \
+    GED_CMD_USED const struct ged_cmd cmd_symbol##_rcmd = { &cmd_symbol##_impl };      \
     extern "C" GED_CMD_USED const struct ged_cmd * const                        \
-        __ged_cmd_ptr_##cmd_symbol = &cmd_symbol
+        __ged_cmd_ptr_##cmd_symbol = &cmd_symbol##_rcmd
 #else
 #define REGISTER_GED_COMMAND(cmd_symbol)                                        \
-    GED_CMD_USED const struct ged_cmd cmd_symbol = { &cmd_symbol##_impl };      \
+    GED_CMD_USED const struct ged_cmd cmd_symbol##_rcmd = { &cmd_symbol##_impl };      \
     GED_CMD_USED const struct ged_cmd * const                                   \
-        __ged_cmd_ptr_##cmd_symbol = &cmd_symbol
+        __ged_cmd_ptr_##cmd_symbol = &cmd_symbol##_rcmd
 #endif
+
+/* If we have odd characters in command names (for example the ? command) we
+ * can't use REGISTER_GED_COMMAND.  In those cases we need to construct the
+ * REGISTER_GED_COMMAND structures manually using legal names.  However, we
+ * also still need the scanner to pick up the command - to achieve this, we add
+ * a no-op marker to identify commands for the scanner in such cases.
+ *
+ * See the ? command in the help command's code for a worked example.
+ *
+ * Argument MUST be the sanitized C identifier (e.g., questionmark, threeptarb)
+ * rather than the cmd string.
+ */
+#define LABEL_GED_COMMAND(cmd_symbol)
 
 #else
 #define REGISTER_GED_COMMAND(cmd_symbol) /* static registration disabled */

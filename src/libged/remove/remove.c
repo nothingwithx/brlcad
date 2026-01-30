@@ -107,6 +107,13 @@ ged_remove_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+
+struct ged_cmd_impl remove_impl = {"remove", ged_remove_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(remove);
+
+struct ged_cmd_impl rm_impl = {"rm", ged_remove_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(rm);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "remove",        ged_remove_core },

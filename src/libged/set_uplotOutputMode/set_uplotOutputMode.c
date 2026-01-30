@@ -80,6 +80,9 @@ ged_set_uplotOutputMode_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl set_uplotOutputMode_impl = {"set_uplotOutputMode", ged_set_uplotOutputMode_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(set_uplotOutputMode);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "set_uplotOutputMode",            ged_set_uplotOutputMode_core }

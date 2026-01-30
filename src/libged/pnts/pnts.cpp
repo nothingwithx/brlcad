@@ -1563,6 +1563,12 @@ ged_make_pnts_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl make_pnts_impl = {"make_pnts", ged_make_pnts_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(make_pnts);
+
+struct ged_cmd_impl pnts_impl = {"pnts", ged_pnts_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(pnts);
+
 #ifdef GED_PLUGIN
 extern "C" {
     static bu_plugin_cmd pcommands[] = {

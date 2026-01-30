@@ -133,6 +133,21 @@ ged_rt_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl rt_impl = {"rt", ged_rt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(rt);
+
+struct ged_cmd_impl rtarea_impl = {"rtarea", ged_rt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(rtarea);
+
+struct ged_cmd_impl rtedge_impl = {"rtedge", ged_rt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(rtedge);
+
+struct ged_cmd_impl rtweight_impl = {"rtweight", ged_rt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(rtweight);
+
+struct ged_cmd_impl art_impl = {"art", ged_rt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(art);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "rt",            ged_rt_core },

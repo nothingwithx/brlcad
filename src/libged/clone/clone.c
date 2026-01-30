@@ -1022,6 +1022,9 @@ ged_clone_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl clone_impl = {"clone", ged_clone_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(clone);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "clone",            ged_clone_core }

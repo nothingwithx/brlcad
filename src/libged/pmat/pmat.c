@@ -66,6 +66,9 @@ ged_pmat_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl pmat_impl = {"pmat", ged_pmat_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(pmat);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "pmat",            ged_pmat_core }

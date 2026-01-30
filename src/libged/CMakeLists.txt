@@ -12,7 +12,7 @@ add_custom_command(
 add_custom_target(ged_plugins_sentinel DEPENDS ${CMAKE_BINARY_DIR}/CMakeTmp/ged_plugins.sentinel)
 set_target_properties(ged_plugins_sentinel PROPERTIES FOLDER "BRL-CAD Plugins/ged")
 
-# Utility program
+# Utility program for finding and setting up GED commands
 set(GED_CMD_SCANNER ${CMAKE_BINARY_DIR}/CMakeTmp/ged_cmd_scanner${CMAKE_EXECUTABLE_SUFFIX})
 file(REMOVE "${GED_CMD_SCANNER}")
 try_compile(
@@ -160,12 +160,6 @@ function(ged_plugin_library name)
       set(DO_STATIC TRUE)
     endif()
   else()
-    set(DO_STATIC FALSE)
-  endif()
-
-  message("${name}: DO_STATIC: ${DO_STATIC}")
-
-  if (NOT ${name} STREQUAL "ged-bot" AND NOT ${name} STREQUAL "ged-open")
     set(DO_STATIC FALSE)
   endif()
 
@@ -704,9 +698,9 @@ write_list_to_file(GED_COMMAND_ALL_SRCS ${ged_plugins_all_srcs})
 execute_process(COMMAND ${GED_CMD_SCANNER} --input-list ${ged_plugins_all_srcs} --gen-exec-api-cpp ${GED_CMD_SRC} --gen-exec-api-hdr ${GED_CMD_HDR} OUTPUT_VARIABLE SCAN_OUT ERROR_VARIABLE SCAN_OUT)
 file(REMOVE ${ged_plugins_all_srcs})
 
-# For static plugins bundled with libged, we generate
-# (TODO - add description of the purpose of this file)
-file(REMOVE ${GED_STATIC_REGISTRATION_CPP})
+# For static plugins bundled with libged, we generate a forced registration
+# file to make sure they are not optimized out and are known to the libged
+# command loading mechanism.
 get_property(GED_COMMAND_STATIC_SRCS GLOBAL PROPERTY GED_COMMAND_STATIC_SRCS)
 set(ged_plugins_static_srcs "${CMAKE_BINARY_DIR}/CMakeTmp/ged_plugins_static_sources.txt")
 write_list_to_file(GED_COMMAND_STATIC_SRCS ${ged_plugins_static_srcs})

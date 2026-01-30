@@ -100,6 +100,9 @@ ged_make_name_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl make_name_impl = {"make_name", ged_make_name_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(make_name);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "make_name",            ged_make_name_core }

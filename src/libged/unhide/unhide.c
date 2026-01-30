@@ -110,6 +110,9 @@ ged_unhide_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl unhide_impl = {"unhide", ged_unhide_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(unhide);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "unhide",            ged_unhide_core }

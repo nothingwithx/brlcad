@@ -501,6 +501,12 @@ ged_concat_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl concat_impl = {"concat", ged_concat_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(concat);
+
+struct ged_cmd_impl dbconcat_impl = {"dbconcat", ged_concat_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(dbconcat);
+
 #ifdef GED_PLUGIN
 extern "C" {
     static bu_plugin_cmd pcommands[] = {

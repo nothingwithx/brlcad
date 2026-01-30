@@ -302,6 +302,12 @@ ged_find_arb_edge_nearest_pnt_core(struct ged *gedp, int argc, const char *argv[
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl move_arb_edge_impl = {"move_arb_edge", ged_move_arb_edge_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(move_arb_edge);
+
+struct ged_cmd_impl find_arb_edge_impl = {"find_arb_edge", ged_find_arb_edge_nearest_pnt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(find_arb_edge);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "move_arb_edge",            ged_move_arb_edge_core },

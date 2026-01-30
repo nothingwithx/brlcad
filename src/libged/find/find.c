@@ -133,6 +133,12 @@ ged_find_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl dbfind_impl = {"dbfind", ged_find_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(dbfind);
+
+struct ged_cmd_impl find_impl = {"find", ged_find_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(find);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "dbfind",          ged_find_core },

@@ -93,6 +93,9 @@ ged_who_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl who_impl = {"who", ged_who_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(who);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "who",            ged_who_core }

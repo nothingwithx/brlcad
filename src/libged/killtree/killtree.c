@@ -260,6 +260,9 @@ ged_killtree_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl killtree_impl = {"killtree", ged_killtree_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(killtree);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "killtree",            ged_killtree_core }

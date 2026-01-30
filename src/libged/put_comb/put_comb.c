@@ -595,6 +595,9 @@ ged_put_comb_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl put_comb_impl = {"put_comb", ged_put_comb_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(put_comb);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "put_comb",            ged_put_comb_core }

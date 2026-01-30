@@ -148,6 +148,9 @@ ged_pset_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl pset_impl = {"pset", ged_pset_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(pset);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "pset",            ged_pset_core }

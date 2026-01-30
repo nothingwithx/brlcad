@@ -124,6 +124,12 @@ ged_move_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl move_impl = {"move", ged_move_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(move);
+
+struct ged_cmd_impl mv_impl = {"mv", ged_move_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(mv);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "move",            ged_move_core },

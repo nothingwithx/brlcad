@@ -551,6 +551,18 @@ ged_metaball_move_pnt_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl metaball_delete_pnt_impl = {"metaball_delete_pnt", ged_metaball_delete_pnt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(metaball_delete_pnt);
+
+struct ged_cmd_impl metaball_move_pnt_impl = {"metaball_move_pnt", ged_metaball_move_pnt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(metaball_move_pnt);
+
+struct ged_cmd_impl mouse_move_metaball_pnt_impl = {"mouse_move_metaball_pnt", ged_metaball_move_pnt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(mouse_move_metaball_pnt);
+
+struct ged_cmd_impl mouse_add_metaball_pnt_impl = {"mouse_add_metaball_pnt", ged_metaball_add_pnt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(mouse_add_metaball_pnt);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "metaball_delete_pnt",          ged_metaball_delete_pnt_core },

@@ -33,7 +33,6 @@
 
 extern "C" {
 #include "fort.h"
-#define ALPHANUM_IMPL
 #include "../alphanum.h"
 }
 
@@ -659,6 +658,9 @@ ged_stat_core(struct ged *gedp, int argc, const char *argv[])
 }
 
 #include "../include/plugin.h"
+
+struct ged_cmd_impl stat_impl = {"stat", ged_stat_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(stat);
 
 #ifdef GED_PLUGIN
 extern "C" {

@@ -182,6 +182,12 @@ bad:
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl illum_impl = {"illum", ged_illum_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(illum);
+
+struct ged_cmd_impl labelvert_impl = {"labelvert", ged_labelvert_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(labelvert);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "illum",            ged_illum_core },

@@ -3733,6 +3733,9 @@ do_new_update:
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl in_impl = {"in", ged_in_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(in);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "in",            ged_in_core }

@@ -404,6 +404,9 @@ ged_lint_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl lint_impl = {"lint", ged_lint_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(lint);
+
 #ifdef GED_PLUGIN
 extern "C" {
     static bu_plugin_cmd pcommands[] = {

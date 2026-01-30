@@ -166,6 +166,9 @@ ged_lt_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl lt_impl = {"lt", ged_lt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(lt);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "lt",            ged_lt_core }

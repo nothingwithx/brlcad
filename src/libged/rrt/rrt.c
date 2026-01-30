@@ -70,6 +70,9 @@ ged_rrt_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl rrt_impl = {"rrt", ged_rrt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(rrt);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "rrt",            ged_rrt_core }

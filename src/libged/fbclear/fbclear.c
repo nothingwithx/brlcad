@@ -103,6 +103,9 @@ ged_fbclear_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl fbclear_impl = {"fbclear", ged_fbclear_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(fbclear);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "fbclear",            ged_fbclear_core }

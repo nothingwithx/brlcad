@@ -85,6 +85,12 @@ ged_copy_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl copy_impl = {"copy", ged_copy_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(copy);
+
+struct ged_cmd_impl cp_impl = {"cp", ged_copy_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(cp);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "copy",            ged_copy_core },

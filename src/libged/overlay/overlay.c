@@ -327,6 +327,9 @@ ged_overlay_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl overlay_impl = {"overlay", ged_overlay_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(overlay);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "overlay",            ged_overlay_core }

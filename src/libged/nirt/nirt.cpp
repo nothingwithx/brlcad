@@ -734,6 +734,18 @@ ged_vnirt_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl nirt_impl = {"nirt", ged_nirt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(nirt);
+
+struct ged_cmd_impl query_ray_impl = {"query_ray", ged_nirt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(query_ray);
+
+struct ged_cmd_impl vnirt_impl = {"vnirt", ged_vnirt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(vnirt);
+
+struct ged_cmd_impl vquery_ray_impl = {"vquery_ray", ged_vnirt_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(vquery_ray);
+
 #ifdef GED_PLUGIN
 extern "C" {
     static bu_plugin_cmd pcommands[] = {

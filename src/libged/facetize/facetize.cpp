@@ -405,6 +405,9 @@ ged_facetize_memfree:
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl facetize_impl = {"facetize", ged_facetize_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(facetize);
+
 #ifdef GED_PLUGIN
 extern "C" {
     static bu_plugin_cmd pcommands[] = {

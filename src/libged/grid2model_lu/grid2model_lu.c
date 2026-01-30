@@ -75,6 +75,9 @@ bad:
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl grid2model_lu_impl = {"grid2model_lu", ged_grid2model_lu_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(grid2model_lu);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "grid2model_lu",            ged_grid2model_lu_core }

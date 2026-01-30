@@ -95,6 +95,9 @@ ged_rot_point_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl rot_point_impl = {"rot_point", ged_rot_point_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(rot_point);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "rot_point",            ged_rot_point_core }

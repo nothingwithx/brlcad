@@ -54,6 +54,9 @@ ged_isize_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl isize_impl = {"isize", ged_isize_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(isize);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "isize",            ged_isize_core }

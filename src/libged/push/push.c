@@ -344,6 +344,9 @@ do_identitize(struct db_i *dbip, struct rt_comb_internal *UNUSED(comb), union tr
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl push_impl = {"push", ged_push_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(push);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "push",            ged_push_core }

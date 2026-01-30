@@ -242,6 +242,9 @@ ged_joint2_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl joint2_impl = {"joint2", ged_joint2_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(joint2);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "joint2",            ged_joint2_core }

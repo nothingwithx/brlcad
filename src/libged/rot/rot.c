@@ -50,6 +50,12 @@ ged_rot_core(struct ged *gedp, int argc, const char *argv[])
 
 extern int ged_rotate_about_core(struct ged *gedp, int argc, const char *argv[]);
 
+struct ged_cmd_impl rot_impl = {"rot", ged_rot_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(rot);
+
+struct ged_cmd_impl rot_about_impl = {"rot_about", ged_rotate_about_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(rot_about);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "rot",            ged_rot_core },

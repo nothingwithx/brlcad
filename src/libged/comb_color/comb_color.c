@@ -78,6 +78,9 @@ ged_comb_color_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl comb_color_impl = {"comb_color", ged_comb_color_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(comb_color);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "comb_color",            ged_comb_color_core }

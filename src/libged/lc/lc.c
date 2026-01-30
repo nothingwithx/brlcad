@@ -511,6 +511,9 @@ print_results:
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl lc_impl = {"lc", ged_lc_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(lc);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "lc",            ged_lc_core }

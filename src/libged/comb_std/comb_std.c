@@ -657,6 +657,12 @@ ged_comb_std_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl c_impl = {"c", ged_comb_std_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(c);
+
+struct ged_cmd_impl comb_std_impl = {"comb_std", ged_comb_std_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(comb_std);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "c",                   ged_comb_std_core },

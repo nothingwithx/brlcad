@@ -1087,6 +1087,9 @@ bad:
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl combmem_impl = {"combmem", ged_combmem_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(combmem);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "combmem",            ged_combmem_core }

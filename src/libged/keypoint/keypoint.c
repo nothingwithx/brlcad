@@ -92,6 +92,9 @@ ged_keypoint_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl keypoint_impl = {"keypoint", ged_keypoint_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(keypoint);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "keypoint",            ged_keypoint_core }

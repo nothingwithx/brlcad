@@ -24,7 +24,7 @@
 #include "ged.h"
 
 static int
-zoom(struct ged *gedp, double sf)
+do_zoom(struct ged *gedp, double sf)
 {
     gedp->ged_gvp->gv_scale /= sf;
     if (gedp->ged_gvp->gv_scale < BV_MINVIEWSCALE)
@@ -62,11 +62,14 @@ ged_zoom_core(struct ged *gedp, int argc, const char *argv[])
 	return BRLCAD_ERROR;
     }
 
-    return zoom(gedp, sf);
+    return do_zoom(gedp, sf);
 }
 
 
 #include "../include/plugin.h"
+
+struct ged_cmd_impl zoom_impl = {"zoom", ged_zoom_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(zoom);
 
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {

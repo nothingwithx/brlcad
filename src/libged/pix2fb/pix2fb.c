@@ -239,6 +239,9 @@ ged_pix2fb_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl pix2fb_impl = {"pix2fb", ged_pix2fb_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(pix2fb);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "pix2fb",            ged_pix2fb_core }

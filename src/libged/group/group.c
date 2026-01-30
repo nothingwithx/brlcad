@@ -61,6 +61,12 @@ ged_group_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl g_impl = {"g", ged_group_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(g);
+
+struct ged_cmd_impl group_impl = {"group", ged_group_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(group);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "g",            ged_group_core },

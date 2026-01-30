@@ -431,6 +431,9 @@ ged_gdiff_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl gdiff_impl = {"gdiff", ged_gdiff_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(gdiff);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "gdiff",            ged_gdiff_core }

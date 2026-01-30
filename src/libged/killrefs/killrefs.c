@@ -120,6 +120,9 @@ ged_killrefs_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl killrefs_impl = {"killrefs", ged_killrefs_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(killrefs);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "killrefs",            ged_killrefs_core }

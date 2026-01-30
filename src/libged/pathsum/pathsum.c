@@ -139,6 +139,15 @@ ged_pathsum_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl listeval_impl = {"listeval", ged_pathsum_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(listeval);
+
+struct ged_cmd_impl paths_impl = {"paths", ged_pathsum_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(paths);
+
+struct ged_cmd_impl pathsum_impl = {"pathsum", ged_pathsum_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(pathsum);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "listeval",           ged_pathsum_core },

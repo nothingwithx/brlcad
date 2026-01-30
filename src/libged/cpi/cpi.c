@@ -104,6 +104,9 @@ ged_cpi_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl cpi_impl = {"cpi", ged_cpi_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(cpi);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "cpi",            ged_cpi_core }

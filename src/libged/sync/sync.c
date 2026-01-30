@@ -54,6 +54,9 @@ ged_sync_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl sync_impl = {"sync", ged_sync_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(sync);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "sync",            ged_sync_core }

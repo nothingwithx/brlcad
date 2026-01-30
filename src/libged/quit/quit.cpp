@@ -38,6 +38,16 @@ ged_quit_core(struct ged *UNUSED(gedp), int UNUSED(argc), const char **UNUSED(ar
 
 #include "../include/plugin.h"
 
+
+struct ged_cmd_impl exit_impl = {"exit", ged_quit_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(exit);
+
+struct ged_cmd_impl q_impl = {"q", ged_quit_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(q);
+
+struct ged_cmd_impl quit_impl = {"quit", ged_quit_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(quit);
+
 #ifdef GED_PLUGIN
 extern "C" {
     static bu_plugin_cmd pcommands[] = {

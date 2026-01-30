@@ -152,6 +152,9 @@ ged_rmap_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl rmap_impl = {"rmap", ged_rmap_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(rmap);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "rmap",            ged_rmap_core }

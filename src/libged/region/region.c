@@ -117,6 +117,12 @@ ged_region_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl r_impl = {"r", ged_region_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(r);
+
+struct ged_cmd_impl region_impl = {"region", ged_region_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(region);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "r",                 ged_region_core },

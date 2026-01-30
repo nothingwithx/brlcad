@@ -35,7 +35,6 @@
 #include "bu/opt.h"
 #include "bu/vls.h"
 
-#define ALPHANUM_IMPL
 #include "../alphanum.h"
 #include "../ged_private.h"
 
@@ -295,6 +294,15 @@ ged_which_core(struct ged *gedp, int argc, const char *argv[])
 
 
 #include "../include/plugin.h"
+
+struct ged_cmd_impl which_impl = {"which", ged_which_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(which);
+
+struct ged_cmd_impl whichair_impl = {"whichair", ged_which_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(whichair);
+
+struct ged_cmd_impl whichid_impl = {"whichid", ged_which_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(whichid);
 
 #ifdef GED_PLUGIN
 extern "C" {

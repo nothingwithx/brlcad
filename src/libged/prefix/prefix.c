@@ -176,6 +176,9 @@ ged_prefix_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl prefix_impl = {"prefix", ged_prefix_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(prefix);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "prefix",            ged_prefix_core }

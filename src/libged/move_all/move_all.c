@@ -334,6 +334,12 @@ ged_move_all_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl move_all_impl = {"move_all", ged_move_all_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(move_all);
+
+struct ged_cmd_impl mvall_impl = {"mvall", ged_move_all_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(mvall);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "move_all",         ged_move_all_core },

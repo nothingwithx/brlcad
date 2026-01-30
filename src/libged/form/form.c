@@ -69,6 +69,9 @@ ged_form_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl form_impl = {"form", ged_form_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(form);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "form",            ged_form_core }

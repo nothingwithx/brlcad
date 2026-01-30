@@ -103,6 +103,9 @@ ged_which_shader_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl which_shader_impl = {"which_shader", ged_which_shader_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(which_shader);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "which_shader",            ged_which_shader_core }

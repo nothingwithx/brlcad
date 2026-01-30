@@ -77,6 +77,9 @@ ged_mrot_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl mrot_impl = {"mrot", ged_mrot_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(mrot);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "mrot",            ged_mrot_core }

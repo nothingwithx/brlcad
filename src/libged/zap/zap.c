@@ -121,6 +121,12 @@ ged_zap_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl Z_impl = {"Z", ged_zap_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(Z);
+
+struct ged_cmd_impl zap_impl = {"zap", ged_zap_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(zap);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "Z",            ged_zap_core },

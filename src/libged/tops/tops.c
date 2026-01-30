@@ -129,6 +129,9 @@ ged_tops_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl tops_impl = {"tops", ged_tops_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(tops);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "tops",            ged_tops_core }

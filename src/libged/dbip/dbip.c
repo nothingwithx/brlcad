@@ -59,6 +59,12 @@ ged_dbip_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl dbip_impl = {"dbip", ged_dbip_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(dbip);
+
+struct ged_cmd_impl get_dbip_impl = {"get_dbip", ged_dbip_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(get_dbip);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "get_dbip",        ged_dbip_core },

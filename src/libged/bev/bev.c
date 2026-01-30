@@ -305,6 +305,9 @@ ged_bev_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl bev_impl = {"bev", ged_bev_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(bev);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "bev",            ged_bev_core }

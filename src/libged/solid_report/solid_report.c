@@ -223,6 +223,12 @@ ged_solid_report_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl solid_report_impl = {"solid_report", ged_solid_report_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(solid_report);
+
+struct ged_cmd_impl x_impl = {"x", ged_solid_report_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(x);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "solid_report",     ged_solid_report_core },

@@ -262,6 +262,9 @@ ged_summary_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl summary_impl = {"summary", ged_summary_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(summary);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "summary",            ged_summary_core }

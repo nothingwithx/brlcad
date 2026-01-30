@@ -87,6 +87,12 @@ ged_close_core(struct ged *gedp, int UNUSED(argc), const char **UNUSED(argv))
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl closedb_impl = {"closedb", ged_close_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(closedb);
+
+struct ged_cmd_impl close_impl = {"close", ged_close_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(close);
+
 #ifdef GED_PLUGIN
 extern "C" {
     static bu_plugin_cmd pcommands[] = {

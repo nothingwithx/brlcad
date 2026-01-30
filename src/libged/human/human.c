@@ -2492,6 +2492,9 @@ ged_human_core(struct ged *gedp, int ac, const char *av[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl human_impl = {"human", ged_human_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(human);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "human",            ged_human_core }

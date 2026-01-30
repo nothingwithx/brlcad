@@ -250,6 +250,9 @@ ged_putmat_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl putmat_impl = {"putmat", ged_putmat_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(putmat);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "putmat",            ged_putmat_core }

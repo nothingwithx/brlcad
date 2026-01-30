@@ -84,6 +84,12 @@ ged_orient_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl orient_impl = {"orient", ged_orient_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(orient);
+
+struct ged_cmd_impl orientation_impl = {"orientation", ged_orient_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(orientation);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "orient",            ged_orient_core },

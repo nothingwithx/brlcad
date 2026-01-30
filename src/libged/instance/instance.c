@@ -78,6 +78,12 @@ ged_instance_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl i_impl = {"i", ged_instance_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(i);
+
+struct ged_cmd_impl instance_impl = {"instance", ged_instance_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(instance);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "i",                   ged_instance_core },

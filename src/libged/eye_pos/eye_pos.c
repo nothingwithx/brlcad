@@ -95,6 +95,9 @@ ged_eye_pos_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl eye_pos_impl = {"eye_pos", ged_eye_pos_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(eye_pos);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "eye_pos",            ged_eye_pos_core }

@@ -109,6 +109,9 @@ ged_eac_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl eac_impl = {"eac", ged_eac_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(eac);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "eac",            ged_eac_core }

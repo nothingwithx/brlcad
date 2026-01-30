@@ -49,6 +49,9 @@ ged_label_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl label_impl = {"label", ged_label_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(label);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "label",            ged_label_core }

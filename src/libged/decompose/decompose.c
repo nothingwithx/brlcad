@@ -204,6 +204,9 @@ ged_decompose_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl decompose_impl = {"decompose", ged_decompose_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(decompose);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "decompose",            ged_decompose_core }

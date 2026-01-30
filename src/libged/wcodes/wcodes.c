@@ -181,6 +181,9 @@ ged_wcodes_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl wcodes_impl = {"wcodes", ged_wcodes_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(wcodes);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "wcodes",            ged_wcodes_core }

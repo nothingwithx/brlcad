@@ -68,6 +68,12 @@ ged_scale_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl scale_impl = {"scale", ged_scale_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(scale);
+
+struct ged_cmd_impl sca_impl = {"sca", ged_scale_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(sca);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "scale",          ged_scale_core },

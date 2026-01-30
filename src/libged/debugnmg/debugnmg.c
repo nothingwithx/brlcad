@@ -68,6 +68,9 @@ ged_debugnmg_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl debugnmg_impl = {"debugnmg", ged_debugnmg_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(debugnmg);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "debugnmg",            ged_debugnmg_core }

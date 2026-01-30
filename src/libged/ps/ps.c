@@ -457,6 +457,12 @@ bad:
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl postscript_impl = {"postscript", ged_ps_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(postscript);
+
+struct ged_cmd_impl ps_impl = {"ps", ged_ps_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(ps);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "postscript",    ged_ps_core },

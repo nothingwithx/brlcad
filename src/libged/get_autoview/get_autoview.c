@@ -38,7 +38,7 @@
  *
  */
 int
-ged_get_core_autoview(struct ged *gedp, int argc, const char *argv[])
+ged_get_autoview_core(struct ged *gedp, int argc, const char *argv[])
 {
     int is_empty = 1;
     vect_t min, max;
@@ -100,9 +100,12 @@ ged_get_core_autoview(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl get_autoview_impl = {"get_autoview", ged_get_autoview_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(get_autoview);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
-    { "get_autoview",            ged_get_core_autoview }
+    { "get_autoview",            ged_get_autoview_core }
 };
 static bu_plugin_manifest pinfo = {
     "libged_get_autoview",

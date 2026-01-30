@@ -148,6 +148,12 @@ ged_list_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl list_impl = {"list", ged_list_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(list);
+
+struct ged_cmd_impl l_impl = {"l", ged_list_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(l);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "list",         ged_list_core },

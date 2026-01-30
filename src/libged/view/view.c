@@ -866,6 +866,63 @@ ged_view_func_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl ae_impl = {"ae", ged_aet_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(ae);
+
+struct ged_cmd_impl aet_impl = {"aet", ged_aet_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(aet);
+
+struct ged_cmd_impl autoview_impl = {"autoview", ged_autoview_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(autoview);
+
+struct ged_cmd_impl center_impl = {"center", ged_center_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(center);
+
+struct ged_cmd_impl data_lines_impl = {"data_lines", ged_view_data_lines, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(data_lines);
+
+struct ged_cmd_impl eye_impl = {"eye", ged_eye_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(eye);
+
+struct ged_cmd_impl eye_pt_impl = {"eye_pt", ged_eye_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(eye_pt);
+
+struct ged_cmd_impl lookat_impl = {"lookat", ged_lookat_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(lookat);
+
+struct ged_cmd_impl print_impl = {"print", _view_cmd_print, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(print);
+
+struct ged_cmd_impl quat_impl = {"quat", ged_quat_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(quat);
+
+struct ged_cmd_impl qvrot_impl = {"qvrot", ged_qvrot_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(qvrot);
+
+struct ged_cmd_impl saveview_impl = {"saveview", ged_saveview_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(saveview);
+
+struct ged_cmd_impl sdata_lines_impl = {"sdata_lines", ged_view_data_lines, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(sdata_lines);
+
+struct ged_cmd_impl size_impl = {"size", ged_size_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(size);
+
+struct ged_cmd_impl view_impl = {"view", ged_view_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(view);
+
+struct ged_cmd_impl view2_impl = {"view2", ged_view_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(view2);
+
+struct ged_cmd_impl view_func_impl = {"view_func", ged_view_func_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(view_func);
+
+struct ged_cmd_impl viewdir_impl = {"viewdir", ged_viewdir_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(viewdir);
+
+struct ged_cmd_impl ypr_impl = {"ypr", ged_ypr_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(ypr);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "ae",             ged_aet_core },

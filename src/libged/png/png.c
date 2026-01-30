@@ -481,6 +481,12 @@ ged_png_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl png_impl = {"png", ged_png_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(png);
+
+struct ged_cmd_impl pngwf_impl = {"pngwf", ged_png_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(pngwf);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "png",            ged_png_core },

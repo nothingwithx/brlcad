@@ -93,6 +93,9 @@ ged_v2m_point_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl v2m_point_impl = {"v2m_point", ged_v2m_point_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(v2m_point);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "v2m_point",            ged_v2m_point_core }

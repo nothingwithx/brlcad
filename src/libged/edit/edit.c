@@ -465,7 +465,7 @@ struct edit_arg {
 #define EDIT_COORDS_ALL (EDIT_COORD_X | EDIT_COORD_Y | EDIT_COORD_Z)
 
 /* edit_arg flags of coordinates that are already set; only used by
- * edit_str[s]_to_arg(). Ignored by edit() */
+ * edit_str[s]_to_arg(). Ignored by edit_core() */
 /* FIXME: these shouldn't be edit_arg flags... edit_strs_to_arg()
  * should just pass edit_str_to_arg() references to automatic vars */
 #define EDIT_COORD_IS_SET_X 	0x08
@@ -1658,7 +1658,7 @@ static const struct edit_cmd_tab edit_cmds[] = {
  * failure.
  */
 static int
-edit(struct ged *gedp, union edit_cmd *const subcmd)
+edit_core(struct ged *gedp, union edit_cmd *const subcmd)
 {
     struct edit_arg **arg_head;
     struct edit_arg *prev_arg;
@@ -1967,7 +1967,7 @@ extern int ged_edit2_core(struct ged *gedp, int argc, const char *argv[]);
  * A command line interface to the edit commands. Will handle any new
  * commands without modification. Validates as much as possible in a
  * single pass, without going back over the arguments list. Further,
- * more specific, validation is performed by edit().
+ * more specific, validation is performed by edit_core().
  */
 int
 ged_edit_core(struct ged *gedp, int argc, const char *argv[])
@@ -2142,7 +2142,7 @@ ged_edit_core(struct ged *gedp, int argc, const char *argv[])
     cur_arg = subcmd.cmd_line.args;
 
     /*
-     * Parse all subcmd args and pass to edit()
+     * Parse all subcmd args and pass to edit_core()
      */
 
     /*
@@ -2219,7 +2219,7 @@ ged_edit_core(struct ged *gedp, int argc, const char *argv[])
 	    if (subcmd.cmd->add_cl_args(gedp, &subcmd, BRLCAD_ERROR) ==
 		BRLCAD_ERROR)
 		return BRLCAD_ERROR;
-	    ret = edit(gedp, &subcmd);
+	    ret = edit_core(gedp, &subcmd);
 	    edit_cmd_free(&subcmd);
 	    return ret;
 	}
@@ -2419,7 +2419,7 @@ ged_edit_core(struct ged *gedp, int argc, const char *argv[])
 	return BRLCAD_ERROR;
     if (subcmd.cmd->add_cl_args(gedp, &subcmd, BRLCAD_ERROR) == BRLCAD_ERROR)
 	return BRLCAD_ERROR;
-    ret = edit(gedp, &subcmd);
+    ret = edit_core(gedp, &subcmd);
     edit_cmd_free(&subcmd);
     return ret;
 
@@ -2431,6 +2431,21 @@ err_missing_arg:
 }
 
 #include "../include/plugin.h"
+
+struct ged_cmd_impl edit_impl = {"edit", ged_edit_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(edit);
+
+struct ged_cmd_impl edarb_impl = {"edarb", ged_edarb_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(edarb);
+
+struct ged_cmd_impl protate_impl = {"protate", ged_protate_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(protate);
+
+struct ged_cmd_impl pscale_impl = {"pscale", ged_pscale_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(pscale);
+
+struct ged_cmd_impl ptranslate_impl = {"ptranslate", ged_ptranslate_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(ptranslate);
 
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {

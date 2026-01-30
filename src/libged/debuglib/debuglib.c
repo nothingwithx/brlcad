@@ -68,6 +68,9 @@ ged_debuglib_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl debuglib_impl = {"debuglib", ged_debuglib_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(debuglib);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "debuglib",            ged_debuglib_core }

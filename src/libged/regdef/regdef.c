@@ -103,6 +103,9 @@ ged_regdef_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl regdef_impl = {"regdef", ged_regdef_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(regdef);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "regdef",            ged_regdef_core }

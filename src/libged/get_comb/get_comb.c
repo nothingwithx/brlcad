@@ -191,6 +191,9 @@ ged_get_comb_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl get_comb_impl = {"get_comb", ged_get_comb_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(get_comb);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "get_comb",            ged_get_comb_core }

@@ -54,6 +54,12 @@ ged_db_version_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl dbversion_impl = {"dbversion", ged_db_version_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(dbversion);
+
+struct ged_cmd_impl version_impl = {"version", ged_db_version_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(version);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "dbversion",          ged_db_version_core },

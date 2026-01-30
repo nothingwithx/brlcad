@@ -77,6 +77,9 @@ ged_match_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl match_impl = {"match", ged_match_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(match);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "match",            ged_match_core }

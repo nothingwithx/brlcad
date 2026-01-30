@@ -941,6 +941,9 @@ ged_make_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl make_impl = {"make", ged_make_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(make);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "make",            ged_make_core }

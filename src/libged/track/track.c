@@ -82,6 +82,9 @@ ged_track_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl track_impl = {"track", ged_track_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(track);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "track",            ged_track_core }

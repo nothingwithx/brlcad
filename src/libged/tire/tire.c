@@ -2016,6 +2016,9 @@ ged_tire_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
+struct ged_cmd_impl tire_impl = {"tire", ged_tire_core, GED_CMD_DEFAULT};
+REGISTER_GED_COMMAND(tire);
+
 #ifdef GED_PLUGIN
 static bu_plugin_cmd pcommands[] = {
     { "tire",            ged_tire_core }

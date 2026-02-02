@@ -67,20 +67,11 @@ ged_env_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
-#ifdef GED_PLUGIN
-static bu_plugin_cmd pcommands[] = {
-    { "env",            ged_env_core }
-};
-static bu_plugin_manifest pinfo = {
-    "libged_env",
-    1,
-    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
-    pcommands,
-    BU_PLUGIN_ABI_VERSION,
-    sizeof(bu_plugin_manifest)
-};
-BU_PLUGIN_DECLARE_MANIFEST(pinfo)
-#endif /* GED_PLUGIN */
+#define GED_ENV_COMMANDS(X, XID) \
+    X(env,              ged_env_core,                      GED_CMD_DEFAULT)
+
+GED_DECLARE_COMMAND_SET(GED_ENV_COMMANDS)
+GED_DECLARE_PLUGIN_MANIFEST("libged_env", 1, GED_ENV_COMMANDS)
 
 /*
  * Local Variables:

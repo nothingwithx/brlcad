@@ -1306,93 +1306,28 @@ bot_cleanup:
 
 #include "../include/plugin.h"
 
-struct ged_cmd_impl bot_cmd_impl = { "bot", ged_bot_core, GED_CMD_DEFAULT };
-REGISTER_GED_COMMAND(bot_cmd);
+#define GED_BOT_COMMANDS(X, XID) \
+    X(bot,              ged_bot_core,                      GED_CMD_DEFAULT) \
+    X(bot_condense,     ged_bot_condense_core,             GED_CMD_DEFAULT) \
+    X(bot_decimate,     ged_bot_decimate_core,             GED_CMD_DEFAULT) \
+    X(bot_dump,         ged_bot_dump_core,                 GED_CMD_DEFAULT) \
+    X(bot_exterior,     ged_bot_exterior,                  GED_CMD_DEFAULT) \
+    X(bot_face_fuse,    ged_bot_face_fuse_core,            GED_CMD_DEFAULT) \
+    X(bot_face_sort,    ged_bot_face_sort_core,            GED_CMD_DEFAULT) \
+    X(bot_flip,         ged_bot_flip_core,                 GED_CMD_DEFAULT) \
+    X(bot_fuse,         ged_bot_fuse_core,                 GED_CMD_DEFAULT) \
+    X(bot_merge,        ged_bot_merge_core,                GED_CMD_DEFAULT) \
+    X(bot_smooth,       ged_bot_smooth_core,               GED_CMD_DEFAULT) \
+    X(bot_split,        ged_bot_split_core,                GED_CMD_DEFAULT) \
+    X(bot_sync,         ged_bot_sync_core,                 GED_CMD_DEFAULT) \
+    X(bot_vertex_fuse,  ged_bot_vertex_fuse_core,          GED_CMD_DEFAULT) \
+    X(dbot_dump,        ged_dbot_dump_core,                GED_CMD_DEFAULT) \
+    X(find_bot_edge,    ged_find_bot_edge_nearest_pnt_core, GED_CMD_DEFAULT) \
+    X(find_bot_pnt,     ged_find_bot_pnt_nearest_pnt_core,  GED_CMD_DEFAULT) \
+    X(get_bot_edges,    ged_get_bot_edges_core,            GED_CMD_DEFAULT)
 
-struct ged_cmd_impl bot_condense_cmd_impl = {"bot_condense", ged_bot_condense_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(bot_condense_cmd);
-
-struct ged_cmd_impl bot_decimate_cmd_impl = {"bot_decimate", ged_bot_decimate_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(bot_decimate_cmd);
-
-struct ged_cmd_impl bot_dump_cmd_impl = {"bot_dump", ged_bot_dump_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(bot_dump_cmd);
-
-struct ged_cmd_impl bot_exterior_cmd_impl = {"bot_exterior", ged_bot_exterior, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(bot_exterior_cmd);
-
-struct ged_cmd_impl bot_face_fuse_cmd_impl = {"bot_face_fuse", ged_bot_face_fuse_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(bot_face_fuse_cmd);
-
-struct ged_cmd_impl bot_face_sort_cmd_impl = {"bot_face_sort", ged_bot_face_sort_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(bot_face_sort_cmd);
-
-struct ged_cmd_impl bot_flip_cmd_impl = {"bot_flip", ged_bot_flip_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(bot_flip_cmd);
-
-struct ged_cmd_impl bot_fuse_cmd_impl = {"bot_fuse", ged_bot_fuse_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(bot_fuse_cmd);
-
-struct ged_cmd_impl bot_merge_cmd_impl = {"bot_merge", ged_bot_merge_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(bot_merge_cmd);
-
-struct ged_cmd_impl bot_smooth_cmd_impl = {"bot_smooth", ged_bot_smooth_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(bot_smooth_cmd);
-
-struct ged_cmd_impl bot_split_cmd_impl = {"bot_split", ged_bot_split_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(bot_split_cmd);
-
-struct ged_cmd_impl bot_sync_cmd_impl = {"bot_sync", ged_bot_sync_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(bot_sync_cmd);
-
-struct ged_cmd_impl bot_vertex_fuse_cmd_impl = {"bot_vertex_fuse", ged_bot_vertex_fuse_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(bot_vertex_fuse_cmd);
-
-struct ged_cmd_impl dbot_dump_cmd_impl = {"dbot_dump", ged_dbot_dump_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(dbot_dump_cmd);
-
-struct ged_cmd_impl find_bot_edge_cmd_impl = {"find_bot_edge", ged_find_bot_edge_nearest_pnt_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(find_bot_edge_cmd);
-
-struct ged_cmd_impl find_bot_pnt_cmd_impl = {"find_bot_pnt", ged_find_bot_pnt_nearest_pnt_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(find_bot_pnt_cmd);
-
-struct ged_cmd_impl get_bot_edges_cmd_impl = {"get_bot_edges", ged_get_bot_edges_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(get_bot_edges_cmd);
-
-#ifdef GED_PLUGIN
-extern "C" {
-    static bu_plugin_cmd pcommands[] = {
-	{ "bot",            ged_bot_core },
-	{ "bot_condense",   ged_bot_condense_core },
-	{ "bot_decimate",   ged_bot_decimate_core },
-	{ "bot_dump",       ged_bot_dump_core },
-	{ "bot_exterior",   ged_bot_exterior },
-	{ "bot_face_fuse",  ged_bot_face_fuse_core },
-	{ "bot_face_sort",  ged_bot_face_sort_core },
-	{ "bot_flip",       ged_bot_flip_core },
-	{ "bot_fuse",       ged_bot_fuse_core },
-	{ "bot_merge",      ged_bot_merge_core },
-	{ "bot_smooth",     ged_bot_smooth_core },
-	{ "bot_split",      ged_bot_split_core },
-	{ "bot_sync",       ged_bot_sync_core },
-	{ "bot_vertex_fuse",ged_bot_vertex_fuse_core },
-	{ "dbot_dump",      ged_dbot_dump_core },
-	{ "find_bot_edge",  ged_find_bot_edge_nearest_pnt_core },
-	{ "find_bot_pnt",   ged_find_bot_pnt_nearest_pnt_core },
-	{ "get_bot_edges",  ged_get_bot_edges_core }
-    };
-    static bu_plugin_manifest pinfo = {
-	"libged_bot",
-	1,
-	(unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
-	pcommands,
-	BU_PLUGIN_ABI_VERSION,
-	sizeof(bu_plugin_manifest)
-    };
-    BU_PLUGIN_DECLARE_MANIFEST(pinfo)
-}
-#endif
+GED_DECLARE_COMMAND_SET(GED_BOT_COMMANDS)
+GED_DECLARE_PLUGIN_MANIFEST("libged_bot", 1, GED_BOT_COMMANDS)
 
 // Local Variables:
 // tab-width: 8

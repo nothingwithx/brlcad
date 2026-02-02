@@ -478,27 +478,12 @@ ged_ls_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
-struct ged_cmd_impl ls_impl = {"ls", ged_ls_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(ls);
+#define GED_LS_COMMANDS(X, XID) \
+    X(ls,  ged_ls_core,   GED_CMD_DEFAULT) \
+    X(t,   ged_ls_core,   GED_CMD_DEFAULT)
 
-struct ged_cmd_impl t_impl = {"t", ged_ls_core, GED_CMD_DEFAULT};
-REGISTER_GED_COMMAND(t);
-
-#ifdef GED_PLUGIN
-static bu_plugin_cmd pcommands[] = {
-    { "ls",            ged_ls_core },
-    { "t",             ged_ls_core }
-};
-static bu_plugin_manifest pinfo = {
-    "libged_ls",
-    1,
-    (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
-    pcommands,
-    BU_PLUGIN_ABI_VERSION,
-    sizeof(bu_plugin_manifest)
-};
-BU_PLUGIN_DECLARE_MANIFEST(pinfo)
-#endif /* GED_PLUGIN */
+GED_DECLARE_COMMAND_SET(GED_LS_COMMANDS)
+GED_DECLARE_PLUGIN_MANIFEST("libged_ls", 1, GED_LS_COMMANDS)
 
 /*
  * Local Variables:

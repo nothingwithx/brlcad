@@ -112,6 +112,87 @@ extern "C" {
 #define REGISTER_GED_COMMAND(cmd_symbol) /* static registration disabled */
 #endif /* LIBGED_STATIC_CORE && !GED_PLUGIN_ONLY */
 
+
+/* =======================================================================================
+ * Canonical command list helpers (token-based entries)
+ *
+ * These macros allow a single per-TU list to drive:
+ *   - static registration (when LIBGED_STATIC_CORE is enabled)
+ *   - plugin manifest export (when GED_PLUGIN is defined)
+ *   - scanner extraction of command names and static symbols
+ *
+ * Expected list signature:
+ *   #define GED_SOMETHING_COMMANDS(X, XID) \
+ *     X(token, fn, opts) \
+ *     XID(symbol, "cmdname", fn, opts)
+ *
+ * Where:
+ *   - token is a C identifier token representing the command name, e.g. bot_condense
+ *   - fn is a ged_func_ptr-compatible function pointer
+ *   - opts is a GED_CMD_* flags expression
+ *   - symbol is an explicit C identifier for odd/aliased commands
+ *
+ * From X(token,...), we derive:
+ *   - command string: "token"
+ *   - symbol id: token##_cmd
+ *
+ * From XID(symbol,"cmd",...), we use:
+ *   - command string: "cmd"
+ *   - symbol id: symbol
+ * ======================================================================================= */
+#define GED_STR_IMPL(x) #x
+#define GED_STR(x) GED_STR_IMPL(x)
+
+#define GED_CAT2_IMPL(a,b) a##b
+#define GED_CAT2(a,b) GED_CAT2_IMPL(a,b)
+
+/* token -> token_cmd (must expand before use in REGISTER_GED_COMMAND) */
+#define GED_CMD_SYM(token) GED_CAT2(token,_cmd)
+
+/* Wrapper to force expansion before REGISTER_GED_COMMAND applies ## internally */
+#define GED_REGISTER_SYM(sym) REGISTER_GED_COMMAND(sym)
+
+/* Emit ged_cmd_impl + static registration anchor (token case) */
+#define GED__DECL_STATIC_X(token, fn, opts)                                           \
+    struct ged_cmd_impl GED_CAT2(GED_CMD_SYM(token), _impl) = { GED_STR(token), fn, opts }; \
+    GED_REGISTER_SYM(GED_CMD_SYM(token));
+
+/* Emit ged_cmd_impl + static registration anchor (explicit-id case) */
+#define GED__DECL_STATIC_XID(sym, cmdstr, fn, opts)                                   \
+    struct ged_cmd_impl GED_CAT2(sym, _impl) = { cmdstr, fn, opts };                  \
+    GED_REGISTER_SYM(sym);
+
+/* Emit plugin command array entry (token case) */
+#define GED__DECL_PCMD_X(token, fn, opts) { GED_STR(token), fn },
+
+/* Emit plugin command array entry (explicit-id case) */
+#define GED__DECL_PCMD_XID(sym, cmdstr, fn, opts) { cmdstr, fn },
+
+/* Public: declare a command set in a TU */
+#define GED_DECLARE_COMMAND_SET(LIST_MACRO)                                        \
+    LIST_MACRO(GED__DECL_STATIC_X, GED__DECL_STATIC_XID)
+
+/* Public: declare plugin manifest in a TU */
+#ifdef GED_PLUGIN
+#  define GED_DECLARE_PLUGIN_MANIFEST(plugin_name_str, plugin_version_u32, LIST_MACRO) \
+    static bu_plugin_cmd pcommands[] = {                                           \
+        LIST_MACRO(GED__DECL_PCMD_X, GED__DECL_PCMD_XID)                           \
+    };                                                                             \
+    static bu_plugin_manifest pinfo = {                                            \
+        plugin_name_str,                                                           \
+        (unsigned int)(plugin_version_u32),                                        \
+        (unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),                    \
+        pcommands,                                                                 \
+        BU_PLUGIN_ABI_VERSION,                                                     \
+        sizeof(bu_plugin_manifest)                                                 \
+    };                                                                             \
+    BU_PLUGIN_DECLARE_MANIFEST(pinfo)
+#else
+/* File-scope safe no-op (no variables, no statements) */
+#  define GED_DECLARE_PLUGIN_MANIFEST(plugin_name_str, plugin_version_u32, LIST_MACRO) \
+    /* not building plugin */
+#endif
+
 #endif /* LIBGED_PLUGIN_H */
 
 /*

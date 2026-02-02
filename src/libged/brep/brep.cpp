@@ -1585,23 +1585,12 @@ ged_brep_core(struct ged *gedp, int argc, const char *argv[])
 
 #include "../include/plugin.h"
 
-#ifdef GED_PLUGIN
-extern "C" {
-    static bu_plugin_cmd pcommands[] = {
-	{ "brep",            ged_brep_core },
-	{ "dplot",           ged_dplot_core }
-    };
-    static bu_plugin_manifest pinfo = {
-	"libged_brep",
-	1,
-	(unsigned int)(sizeof(pcommands)/sizeof(pcommands[0])),
-	pcommands,
-	BU_PLUGIN_ABI_VERSION,
-	sizeof(bu_plugin_manifest)
-    };
-    BU_PLUGIN_DECLARE_MANIFEST(pinfo)
-}
-#endif /* GED_PLUGIN */
+#define GED_BREP_COMMANDS(X, XID) \
+    X(brep,   ged_brep_core,   GED_CMD_DEFAULT) \
+    X(dplot,  ged_dplot_core,  GED_CMD_DEFAULT)
+
+GED_DECLARE_COMMAND_SET(GED_BREP_COMMANDS)
+GED_DECLARE_PLUGIN_MANIFEST("libged_brep", 1, GED_BREP_COMMANDS)
 
 // Local Variables:
 // tab-width: 8
